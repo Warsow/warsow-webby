@@ -1,0 +1,39 @@
+#!/bin/bash
+set -e
+cd "$(dirname "${0}")/.."
+
+PATH="${PATH}:node_modules/.bin"
+
+## Development server
+if [[ ${1} == '--dev' ]]; then
+  export APP_ENV='local'
+
+  hash nodemon 2>/dev/null && [[ -d node_modules ]] || yarn install
+  hash nodemon sassc
+
+  cleanup() {
+      trap - INT TERM EXIT
+      echo -en "\nSending SIGKILL..."
+      kill -9 ${pid_server} 2>/dev/null
+      [[ $? -eq 0 ]] && echo -n " server [✓]"
+      kill -9 ${pid_make} 2>/dev/null
+      [[ $? -eq 0 ]] && echo -n " make [✓]"
+      echo
+      exit 0
+  }
+
+  trap "cleanup" INT TERM EXIT
+
+  ## Application server
+  nodemon --watch src --ext js --quiet src/http/index.js & pid_server="$!"
+  ## Make server
+  nodemon --watch src --ext scss --quiet --exec make & pid_make="$!"
+
+  wait
+
+## Normal server
+else
+  export APP_ENV='production'
+  hash node_modules 2>/dev/null || yarn install --production
+  exec node src/http/index.js "${@}"
+fi

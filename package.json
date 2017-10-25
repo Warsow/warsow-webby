@@ -1,0 +1,14 @@
+{
+  "name": "webby",
+  "version": "0.1.0",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "@std/esm": "^0.12.4",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "livereload": "^0.6.3",
+    "nodemon": "^1.12.1"
+  }
+}
