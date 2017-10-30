@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warsow</title>
+
+<!-- stylesheets:start -->
+<style type="stylesheet/scss">
+body, html {
+  margin: 0;
+  background: #111;
+}
+
+.header {
+  height: 64px;
+  background: #222;
+
+  .logo {
+    height: 64px - 2 * 8px;
+    margin: 8px 0;
+  }
+}
+
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.button-slanted {
+  // TODO: Refactor into a reusable component
+  padding: 5px 12px;
+  transform: skewX(-20deg);
+  background: #f40;
+  width: 80px;
+  font-weight: bold;
+  font-family: sans-serif;
+
+  transition: left 125ms;
+  position: relative;
+  left: 0px;
+
+  .button-slanted-content {
+    transform: skewX(20deg);
+  }
+
+  &:hover {
+    position: relative;
+    left: 5px;
+    background: #fff;
+  }
+}
+</style>
+<!-- stylesheets:end -->
+
+</head>
+<body>
+
+<!-- body:start -->
+<div class="header">
+  <div class="content-container">
+    <img class="logo" src="images/warsow.png">
+  </div>
+</div>
+<div class="button-slanted">
+  <div class="button-slanted-content">
+    Text
+  </div>
+</div>
+<!-- body:end -->
+
+<!-- scripts:start -->
+<script src="https://unpkg.com/sass.js@^0.10.6/dist/sass.sync.js"></script>
+<script>
+  // Compile Sass
+  const stylePromises = Array.prototype.slice
+    .call(document.getElementsByTagName('style'))
+    .map((el) => {
+      return new Promise((resolve, reject) => {
+        Sass.compile(el.innerHTML, (result) => {
+          if (result.status === 0) {
+            resolve(result);
+          } else {
+            console.error(result.formatted);
+          }
+        });
+      });
+    });
+  // Put all compiled styles to DOM
+  Promise
+    .all(stylePromises)
+    .then((styles) => {
+      console.log(styles);
+      const output = styles.map((x) => x.text).join('\n');
+      const el = document.createElement('style');
+      el.type = 'text/css';
+      if (el.styleSheet) {
+        el.styleSheet.cssText = output;
+      }
+      else {
+        el.appendChild(document.createTextNode(output));
+      }
+      document.getElementsByTagName('head')[0].appendChild(el);
+    });
+</script>
+<!-- scripts:end -->
+
+</body>
+</html>
