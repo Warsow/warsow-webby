@@ -9,47 +9,67 @@
 
 <!-- stylesheets:start -->
 <style type="stylesheet/scss">
+// Vars
+$orange: #f17823;
+$purple: #541c7a;
+
 body, html {
   margin: 0;
   background: #111;
 }
 
 .header {
-  height: 64px;
+  display: flex;
+  align-items: center;
+  height: 72px;
   background: #222;
 
+  .item {
+    // flex: 1;
+    margin-left: 20px;
+  }
+
   .logo {
-    height: 64px - 2 * 8px;
-    margin: 8px 0;
+    height: 72px - 2 * 16px;
+    margin: 16px 0;
+
+    // A little bit of offset
+    position: relative;
+    top: 1px;
   }
 }
 
 .content-container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 15px;
 }
 
 .button-slanted {
   // TODO: Refactor into a reusable component
-  padding: 5px 12px;
+  display: inline-block;
+  padding: 7px 20px;
   transform: skewX(-20deg);
-  background: #f40;
-  width: 80px;
+  background: $orange;
+  color: #fff;
   font-weight: bold;
   font-family: sans-serif;
-
-  transition: left 125ms;
-  position: relative;
-  left: 0px;
+  transition: background-color 125ms;
+  cursor: pointer;
 
   .button-slanted-content {
     transform: skewX(20deg);
   }
 
   &:hover {
-    position: relative;
-    left: 5px;
-    background: #fff;
+    background: lighten($orange, 10%);
+  }
+
+  &.button-slanted-purple {
+    background: $purple;
+
+    &:hover {
+      background: lighten($purple, 10%);
+    }
   }
 }
 </style>
@@ -60,14 +80,30 @@ body, html {
 
 <!-- body:start -->
 <div class="header">
-  <div class="content-container">
+  <div class="item">
     <img class="logo" src="images/warsow.png">
   </div>
-</div>
-<div class="button-slanted">
-  <div class="button-slanted-content">
-    Text
+  <div class="item">
+    <div class="button-slanted">
+      <div class="button-slanted-content">
+        Home
+      </div>
+    </div>
   </div>
+  <div class="item">
+    <div class="button-slanted button-slanted-purple">
+      <div class="button-slanted-content">
+        Download
+      </div>
+    </div>
+  </div>
+  <div class="item">
+    <span style="color: white">More random text</span>
+  </div>
+</div>
+
+<div class="content-container">
+
 </div>
 <!-- body:end -->
 
@@ -92,7 +128,6 @@ body, html {
   Promise
     .all(stylePromises)
     .then((styles) => {
-      console.log(styles);
       const output = styles.map((x) => x.text).join('\n');
       const el = document.createElement('style');
       el.type = 'text/css';
