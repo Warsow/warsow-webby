@@ -1,0 +1,45 @@
+// Base
+@import './reset.scss';
+@import './variables.scss';
+@import './typography.scss';
+
+// Components
+@import './components/header.scss';
+@import './components/button.scss';
+
+// Misc
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.greeting {
+  position: relative;
+  background: {
+    image: url('/images/y37fbax.jpg');
+    size: cover;
+    position: center;
+  };
+  height: 100vh;
+
+  h1 {
+    font-size: 2.5rem;
+    line-height: 1em;
+    margin: 1rem 0;
+  }
+
+  p {
+    font-size: 1.25rem;
+    line-height: 1.5em;
+  }
+}
+
+.greeting-stripe {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  background-color: fade-out($color-bg, 0.2);
+  padding: 1rem 0;
+}

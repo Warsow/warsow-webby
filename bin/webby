@@ -2,12 +2,11 @@
 set -e
 cd "$(dirname "${0}")/.."
 
+export APP_ENV='local'
 PATH="${PATH}:node_modules/.bin"
 
 ## Development server
 if [[ ${1} == '--dev' ]]; then
-  export APP_ENV='local'
-
   hash nodemon 2>/dev/null && [[ -d node_modules ]] || yarn install
   hash nodemon sassc
 
@@ -24,16 +23,28 @@ if [[ ${1} == '--dev' ]]; then
 
   trap "cleanup" INT TERM EXIT
 
+  mkdir -p public/styles
+
   ## Application server
-  nodemon --watch src --ext js --quiet src/http/index.js & pid_server="$!"
+  nodemon --watch src --ext js --quiet src/http/index.js \
+    & pid_server="$!"
+
   ## Make server
-  nodemon --watch src --ext scss --quiet --exec make & pid_make="$!"
+  nodemon --watch src --ext scss --quiet --exec \
+    sassc src/client/styles/index.scss public/styles/index.css -t expanded -m \
+    & pid_make="$!"
 
   wait
+  exit ${?}
+fi
+
+## Clean runtime and build artifacts
+if [[ ${1} == '--clean' ]]; then
+  rm -rf node_modules .esm-cache public/styles
+  exit
+fi
 
 ## Normal server
-else
-  export APP_ENV='production'
-  hash node_modules 2>/dev/null || yarn install --production
-  exec node src/http/index.js "${@}"
-fi
+export APP_ENV='production'
+hash node_modules 2>/dev/null || yarn install --production
+exec node src/http/index.js "${@}"

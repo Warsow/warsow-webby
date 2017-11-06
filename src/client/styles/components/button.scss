@@ -1,0 +1,36 @@
+.button-slanted {
+  // TODO: Refactor into a reusable component
+  display: inline-block;
+  padding: 0.25em 1em;
+  transform: skewX(-20deg);
+  background: $color-orange;
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1.5em;
+  transition: background-color 100ms;
+  cursor: pointer;
+
+  .button-slanted-content {
+    transform: skewX(20deg);
+  }
+
+  &:hover {
+    background: lighten($color-orange, 10%);
+  }
+}
+
+.button-slanted-purple {
+  background: $color-purple;
+
+  &:hover {
+    background: lighten($color-purple, 10%);
+  }
+}
+
+.button-slanted-rose {
+  background: $color-rose;
+
+  &:hover {
+    background: lighten($color-rose, 10%);
+  }
+}

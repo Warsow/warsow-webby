@@ -1,0 +1,29 @@
+.header {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5em;
+  background: $color-bg-lighter;
+  color: $color-fg-lighter;
+}
+
+.header-flex {
+  align-items: center;
+  display: flex;
+  height: 100%;
+}
+
+.header-item {
+  display: flex-item;
+  margin-right: 1rem;
+}
+
+.header-logo {
+  height: 3rem;
+  margin-right: 1rem;
+  // A little bit of offset
+  position: relative;
+  top: 2px;
+}

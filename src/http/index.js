@@ -12,19 +12,22 @@ const loadESM = require('@std/esm')(module, {
 // Initialize the server and configure support for ejs templates
 const app = new Express();
 
+// Setup EJS templating engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'templates'));
+
 // Define the folder that will be used for static assets
 app.use(Express.static('public'));
 
 // Routes
 app.get('/', (req, res) => {
-  const page = loadESM('./components/home.js').default;
-  return res.send(page({
+  return res.render('index', {
     livereload: process.env.APP_ENV === 'local',
-  }));
+  });
 });
 
 // Start the server
-const port = 3000;
+const port = parseInt(process.env.APP_PORT, 10) || 3000;
 const server = new http.Server(app);
 
 server.listen(port, (err) => {

@@ -1,0 +1,13 @@
+// Main colors
+$color-bg: #111;
+$color-bg-darker: darken($color-bg, 5%);
+$color-bg-lighter: lighten($color-bg, 5%);
+
+$color-fg: #fff;
+$color-fg-darker: darken($color-fg, 5%);
+$color-fg-lighter: lighten($color-fg, 5%);
+
+// Brand colors
+$color-orange: #f17823;
+$color-purple: #541c7a;
+$color-rose: #93244e;
