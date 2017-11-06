@@ -16,7 +16,7 @@ if [[ ${1} == '--dev' ]]; then
       kill -9 ${pid_server} 2>/dev/null
       [[ $? -eq 0 ]] && echo -n " server [✓]"
       kill -9 ${pid_make} 2>/dev/null
-      [[ $? -eq 0 ]] && echo -n " make [✓]"
+      [[ $? -eq 0 ]] && echo -n " sass [✓]"
       echo
       exit 0
   }
@@ -29,7 +29,7 @@ if [[ ${1} == '--dev' ]]; then
   nodemon --watch src --ext js --quiet src/http/index.js \
     & pid_server="$!"
 
-  ## Make server
+  ## Sass compiler
   nodemon --watch src --ext scss --quiet --exec \
     sassc src/client/styles/index.scss public/styles/index.css -t expanded -m \
     & pid_make="$!"
