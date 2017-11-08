@@ -4,26 +4,30 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 5em;
+  height: 4em;
   background: $color-bg-lighter;
   color: $color-fg-lighter;
 }
 
 .header-flex {
-  align-items: center;
   display: flex;
+  align-items: center;
   height: 100%;
 }
 
 .header-item {
-  display: flex-item;
   margin-right: 1rem;
+
+  .button {
+    // font-size: 1.2em;
+    margin: 0;
+  }
 }
 
 .header-logo {
-  height: 3rem;
+  height: 2.4rem;
   margin-right: 1rem;
   // A little bit of offset
   position: relative;
-  top: 2px;
+  top: 3px;
 }

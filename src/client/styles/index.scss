@@ -10,8 +10,21 @@
 // Misc
 .container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   padding: 0 2rem;
+}
+
+.download {
+  max-width: 435px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 2rem;
+  // text-align: center;
+}
+
+.content {
+  margin-top: 6em;
 }
 
 .greeting {
@@ -24,13 +37,13 @@
   height: 100vh;
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     line-height: 1em;
     margin: 1rem 0;
   }
 
   p {
-    font-size: 1.25rem;
+    // font-size: 1.25rem;
     line-height: 1.5em;
   }
 }
@@ -42,4 +55,27 @@
   right: 0;
   background-color: fade-out($color-bg, 0.2);
   padding: 1rem 0;
+}
+
+.greeting-flex {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  @media screen and (max-width: 920px) {
+    display: block;
+  }
+}
+
+.greeting-download {
+  margin-left: 2rem;
+  font-size: 2.5rem;
+
+  @media screen and (max-width: 920px) {
+    margin-left: 0;
+  }
+
+  @media screen and (max-width: 460px) {
+    font-size: 1.75rem;
+  }
 }

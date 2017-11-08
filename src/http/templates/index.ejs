@@ -1,50 +1,24 @@
-<!doctype html>
-<html>
-<head>
+<% include layout/header %>
 
-<meta charset="utf-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<meta name="description" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Warsow</title>
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Share:400,400i,700,700i&amp;subset=latin-ext">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,400i,500,500i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext">
-<link rel="stylesheet" href="/styles/index.css">
-
-</head>
-<body>
-
-<div class="header">
-  <div class="header-flex container">
-    <div class="header-item">
-      <img class="header-logo" src="images/warsow.png">
-    </div>
-    <div class="header-item">
-      <div class="button-slanted">
-        <div class="button-slanted-content">
-          Home
-        </div>
+<div class="greeting">
+  <div class="greeting-stripe">
+    <div class="greeting-flex container">
+      <div class="greeting-text">
+        <h1>The fastest sport on the web!</h1>
+        <p>
+          Set in a futuristic cartoonish world, Warsow is a completely free
+          fast-paced first-person shooter (FPS) for Windows, Linux and macOS.
+        </p>
+      </div>
+      <div class="greeting-download">
+        <a class="button button-slanted button-flex button-purple"
+          href="/download">
+          Download
+          <i class="mdi mdi-download"></i>
+        </a>
       </div>
     </div>
   </div>
 </div>
 
-<div class="greeting">
-  <div class="greeting-stripe">
-    <div class="container">
-      <h1>The most fast-paced sport on the web!</h1>
-      <p>
-        Set in a futuristic cartoonish world, Warsow is a completely free
-        fast-paced first-person shooter (FPS) for Windows, Linux and macOS.
-      </p>
-    </div>
-  </div>
-</div>
-
-<% if (livereload) { %>
-<script src="http://localhost:35729/livereload.js?snipver=1"></script>
-<% } %>
-
-</body>
-</html>
+<% include layout/footer %>

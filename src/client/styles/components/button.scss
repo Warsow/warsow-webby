@@ -1,36 +1,73 @@
-.button-slanted {
-  // TODO: Refactor into a reusable component
+@mixin button-color($color-bg, $color-fg: #fff) {
+  background: $color-bg;
+  color: $color-fg;
+
+  // Apply same color to button-slanted
+  &:before {
+    background: $color-bg;
+  }
+
+  &:hover, &:hover:before {
+    background: lighten($color-bg, 10%);
+  }
+}
+
+.button {
   display: inline-block;
   padding: 0.25em 1em;
-  transform: skewX(-20deg);
-  background: $color-orange;
-  color: #fff;
-  font-size: 1.2rem;
   line-height: 1.5em;
   transition: background-color 100ms;
   cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  min-height: 1em;
+  @include button-color(#555);
+  margin-bottom: 0.5em;
 
-  .button-slanted-content {
-    transform: skewX(20deg);
-  }
-
-  &:hover {
-    background: lighten($color-orange, 10%);
-  }
-}
-
-.button-slanted-purple {
-  background: $color-purple;
-
-  &:hover {
-    background: lighten($color-purple, 10%);
+  .mdi {
+    display: inline-block;
+    padding-left: 0.5em;
+    margin-right: -0.2em;
   }
 }
 
-.button-slanted-rose {
-  background: $color-rose;
+.button-slanted {
+  position: relative;
+  background-color: transparent !important;
+  z-index: 0;
 
-  &:hover {
-    background: lighten($color-rose, 10%);
+  // Compensate for skewage
+  margin-right: 0.3em;
+  margin-left: 0.3em;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    transform: skewX(-20deg);
+    z-index: -1;
+    transition: background-color 100ms;
   }
+}
+
+.button-flex {
+  display: flex;
+  justify-content: center;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.button-orange, .button-primary {
+  @include button-color($color-orange);
+}
+
+.button-purple {
+  @include button-color($color-purple);
+}
+
+.button-rose {
+  @include button-color($color-rose);
 }

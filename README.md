@@ -4,7 +4,7 @@
 
 * Node.js `^8.7`
 * Yarn `^1.2`
-* SassC (based on libsass)
+* SassC
 
 
 ## Usage

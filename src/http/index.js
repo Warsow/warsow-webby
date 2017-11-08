@@ -26,6 +26,17 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/download', (req, res) => {
+  return res.render('download', {
+    livereload: process.env.APP_ENV === 'local',
+  });
+});
+
+// Not found handler
+app.get((req, res) => {
+  return res.render('404');
+});
+
 // Start the server
 const port = parseInt(process.env.APP_PORT, 10) || 3000;
 const server = new http.Server(app);
