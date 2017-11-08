@@ -12,6 +12,7 @@
 /package-lock.json
 /yarn-error.log
 /.esm-cache
+*.socket
 
 
 ## ------------------------------------
