@@ -13,6 +13,10 @@
   margin-left: auto;
   margin-right: auto;
   padding: 0 2rem;
+
+  @media screen and (max-width: 460px) {
+    padding: 0 1rem;
+  }
 }
 
 .download {

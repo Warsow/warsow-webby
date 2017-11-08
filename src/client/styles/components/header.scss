@@ -4,7 +4,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4em;
+  height: 3em;
+  padding: 0.5em 0;
   background: $color-bg-lighter;
   color: $color-fg-lighter;
 }
@@ -26,8 +27,38 @@
 
 .header-logo {
   height: 2.4rem;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   // A little bit of offset
   position: relative;
   top: 3px;
+}
+
+.header-coming-soon {
+  text-align: right;
+  flex: 1;
+  font-size: 12pt;
+  color: #888;
+  min-width: 6em;
+}
+
+@media screen and (max-width: 640px) {
+  .header {
+    height: auto;
+    min-height: 3em;
+    font-size: 12pt;
+  }
+  .header-flex {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .header-logo {
+    height: 2em;
+    margin-right: 0;
+  }
+  .header-item {
+    margin-right: 0.25rem;
+  }
+  .header-coming-soon {
+    display: none;
+  }
 }
