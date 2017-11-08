@@ -5,47 +5,78 @@ cd "$(dirname "${0}")/.."
 export APP_ENV='local'
 PATH="${PATH}:node_modules/.bin"
 
-## Development server
-if [[ ${1} == '--dev' ]]; then
-  hash nodemon 2>/dev/null && [[ -d node_modules ]] || yarn install
-  hash nodemon sassc
 
-  cleanup() {
-      trap - INT TERM EXIT
-      echo -en "\nSending SIGKILL..."
-      kill -9 ${pid_server} 2>/dev/null
-      [[ $? -eq 0 ]] && echo -n " server [✓]"
-      kill -9 ${pid_make} 2>/dev/null
-      [[ $? -eq 0 ]] && echo -n " sass [✓]"
-      echo
-      exit 0
-  }
+## --------------------------------------------------------
+##  Tasks
+## --------------------------------------------------------
 
-  trap "cleanup" INT TERM EXIT
-
-  mkdir -p public/styles
-
+task_dev() {
+  yarn install
+  trap "task_dev_cleanup" INT TERM EXIT
   ## Application server
-  nodemon --watch src --ext js --quiet src/http/index.js \
-    & pid_server="$!"
-
-  ## Sass compiler
-  nodemon --watch src --ext scss --quiet --exec \
-    sassc src/client/styles/index.scss public/styles/index.css -t expanded -m \
-    & pid_make="$!"
-
+  nodemon --watch src --ext js --quiet src/http/index.js & pid_server="$!"
+  ## Build server
+  webpack --watch & pid_webpack="$!"
   wait
+}
+
+task_dev_cleanup() {
+  trap - INT TERM EXIT
+  rm -rf public/bundles
+  echo -en "\nSending SIGKILL..."
+  kill -9 ${pid_server} 2>/dev/null && echo -n " server [✓]"
+  kill -9 ${pid_webpack} 2>/dev/null && echo -n " webpack [✓]"
+  echo
+  exit 0
+}
+
+task_kitchen_sink() {
+  yarn install
+  rm -rf public/bundles
+  webpack-dev-server --progress --inline --hot
+}
+
+task_build() {
+  export APP_ENV='production'
+  yarn install
+  webpack --progress "${@}"
+}
+
+
+## --------------------------------------------------------
+##  Option parsing
+## --------------------------------------------------------
+
+## Run a development server
+if [[ ${1} == '--dev' ]]; then
+  task_dev
   exit ${?}
 fi
 
-## Clean runtime and build artifacts
+## Run a kitchen-sink server
+if [[ ${1} == '--kitchen-sink' ]]; then
+  task_kitchen_sink
+  exit ${?}
+fi
+
+## Run a build
+if [[ ${1} == '--build' ]]; then
+  task_build
+  exit ${?}
+fi
+
+## Clean build and runtime artifacts
 if [[ ${1} == '--clean' ]]; then
-  rm -rf node_modules .esm-cache public/styles
+  rm -rf node_modules .esm-cache public/bundles
+  rm -f yarn-error.log server.socket npm-debug.log package-lock.json
   exit
 fi
 
-## Normal server
+## Check if we need to build the bundle before running the server
+[[ ! -d public/bundles ]] && task_build
+
+## Launch the server
 export APP_ENV='production'
-export APP_PORT='server.socket' # Use an actual UNIX socket
-hash node_modules 2>/dev/null || yarn install --production
+export APP_PORT='server.socket' # Use a unix socket
+yarn install --production
 exec node src/http/index.js "${@}"
