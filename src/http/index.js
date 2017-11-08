@@ -2,6 +2,7 @@
 
 const path = require('path');
 const http = require('http');
+const fs = require('fs');
 const Express = require('express');
 
 // Configure ES modules
@@ -38,14 +39,29 @@ app.get((req, res) => {
 });
 
 // Start the server
-const port = parseInt(process.env.APP_PORT, 10) || 3000;
+const port = process.env.APP_PORT || 3000;
 const server = new http.Server(app);
 
 server.listen(port, (err) => {
   if (err) {
     return console.error(err);
   }
-  console.info(`Server running on http://localhost:${port}/`);
+  // Usual numeric port
+  if (Number.isInteger(port)) {
+    console.info(`Server running on http://localhost:${port}/`);
+  }
+  // Unix socket
+  else {
+    console.info(`Server running on '${port}'`);
+    // Set read/write permissions on a socket
+    fs.chmodSync(port, '666');
+    // Setup cleanup callbacks
+    process.on('exit', () => cleanUpServer());
+    process.on('SIGINT', () => {
+      cleanUpServer();
+      process.exit();
+    });
+  }
 });
 
 // Start livereload server
@@ -54,4 +70,15 @@ if (process.env.APP_ENV === 'local') {
   livereload
     .createServer()
     .watch('public');
+}
+
+function cleanUpServer() {
+  const port = process.env.APP_PORT || 3000;
+  // Force remove the socket file
+  // (potentially unsafe?)
+  if (!Number.isInteger(port)) {
+    try {
+      fs.unlinkSync(port);
+    } catch (err) {}
+  }
 }

@@ -14,3 +14,5 @@
 
 It will install extra dependencies automatically, and will compile all the
 necessary source code to render webby correctly.
+
+[Installing a systemd service](config/systemd/README.md).

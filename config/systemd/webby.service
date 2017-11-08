@@ -1,0 +1,14 @@
+[Unit]
+Description=Webby (warsow.net)
+After=network.target
+
+[Service]
+Type=simple
+User=webby
+WorkingDirectory=/home/webby/webby
+ExecStartPre=/bin/rm -f server.socket
+ExecStart=/home/webby/webby/bin/webby
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

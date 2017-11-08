@@ -46,5 +46,6 @@ fi
 
 ## Normal server
 export APP_ENV='production'
+export APP_PORT='server.socket' # Use an actual UNIX socket
 hash node_modules 2>/dev/null || yarn install --production
 exec node src/http/index.js "${@}"
