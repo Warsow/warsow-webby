@@ -1,0 +1,72 @@
+.server {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.server-header {
+  width: 100%;
+  padding: 0.5em 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  // Ellipsis
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.server-name {
+  font-size: 1.25em;
+  line-height: 1.5em;
+}
+
+.server-gametype {
+  font-size: 0.75em;
+  line-height: 1.5em;
+}
+
+.server-ip {
+  font-size: 0.75em;
+  line-height: 1.5em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@mixin server-team($r, $g, $b) {
+  background-color: rgba($r, $g, $b, 0.1);
+  // font-size: 0.9em;
+
+  h3 {
+    background-color: rgba($r, $g, $b, 0.4);
+    display: block;
+    padding: 0.2em;
+    margin: 0;
+  }
+
+  th {
+    padding: 0 0.2rem;
+    font-weight: bold;
+  }
+
+  td {
+    padding: 0 0.2rem;
+    background: rgba($r, $g, $b, 0.25);
+    &:nth-child(even) {
+      background: rgba($r, $g, $b, 0.125);
+    }
+  }
+}
+
+.server-team-alpha {
+  @include server-team(255, 70, 45);
+}
+
+.server-team-beta {
+  @include server-team(70, 255, 45);
+}
+
+.server-team-players {
+  @include server-team(70, 70, 70);
+}
+
+.server-team-spec {
+  @include server-team(70, 70, 70);
+}
