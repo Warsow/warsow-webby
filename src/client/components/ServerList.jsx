@@ -46,7 +46,9 @@ class Server extends React.Component {
       <div className='server'>
         <div className='server-header'>
           <div className='server-name'>
-            <ColorEntities value={server.getName()} />
+            <a href={`warsow://${server.ip}:${server.port}`}>
+              <ColorEntities value={server.getName()} />
+            </a>
           </div>
           <div className='server-gametype'>
             {server.getGameType()} / {server.getMapName()}
