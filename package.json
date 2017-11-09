@@ -1,7 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "start": "yarn install && webpack-dev-server --progress --inline --hot"
+    "start": "node src/http/index.js",
+    "kitchen-sink": "webpack-dev-server --progress --inline --hot",
+    "build": "webpack --progress",
+    "watch": "webpack --watch"
   },
   "dependencies": {
     "@std/esm": "^0.12.4",

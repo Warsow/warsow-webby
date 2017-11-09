@@ -5,6 +5,9 @@ const http = require('http');
 const fs = require('fs');
 const Express = require('express');
 
+// Align with project root
+process.chdir(__dirname + '/../..');
+
 // Configure ES modules
 const loadESM = require('@std/esm')(module, {
   esm: 'js',
