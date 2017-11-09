@@ -1,5 +1,8 @@
 const http = require('http');
 const fs = require('fs');
+
+const APP_WS_PORT = process.env.APP_WS_PORT || 88;
+
 const server = http.createServer(function (req, res) {
   if ( req.url == "/" )
     req.url = "/index.htm";
@@ -16,8 +19,9 @@ const server = http.createServer(function (req, res) {
     res.end();
   });
 });
-server.listen(88, '127.0.0.1');
-console.log('Server running at http://127.0.0.1:88/');
+server.listen(APP_WS_PORT, '127.0.0.1', () => {
+  console.log(`Server running at http://localhost:${APP_WS_PORT}/`);
+});
 
 //---------------------------------------
 

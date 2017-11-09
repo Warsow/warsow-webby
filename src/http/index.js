@@ -8,12 +8,12 @@ const Express = require('express');
 // Align with project root
 process.chdir(__dirname + '/../..');
 
-// Configure ES modules
-const loadESM = require('@std/esm')(module, {
-  esm: 'js',
-});
+// // Configure ES modules
+// const loadESM = require('@std/esm')(module, {
+//   esm: 'js',
+// });
 
-// Initialize the server and configure support for ejs templates
+// Initialize the server
 const app = new Express();
 
 // Setup EJS templating engine

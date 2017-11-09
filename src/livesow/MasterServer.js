@@ -1,150 +1,152 @@
 const dgram = require('dgram');
 const WarsowServer = require('./WarsowServer');
 
-module.exports = function (params) {
-  return (new MasterServer(params));
-}
+module.exports = (params) => new MasterServer(params);
 
-function MasterServer(params) {
-  this.debug = params.debug || false;
+class MasterServer {
 
-  this.masterservers = params.servers || ['dpmaster.deathmask.net']; // TODO: should parse & validate these..
-  this.port = params.port || 27950;
+  constructor(params) {
+    this.debug = params.debug || false;
 
-  this.updateMessages = [];
-  if ( params.versions ) {
-    for ( var i = 0; i < params.versions.length; i++ ) {
-      this.updateMessages.push(
-        new Buffer('\xFF\xFF\xFF\xFFgetserversExt Warsow ' + params.versions[i] + ' ipv4 ipv6 empty full', 'ascii')
-      );
+    this.masterservers = params.servers || ['dpmaster.deathmask.net']; // TODO: should parse & validate these..
+    this.port = params.port || 27950;
+
+    this.updateMessages = [];
+    if ( params.versions ) {
+      for ( var i = 0; i < params.versions.length; i++ ) {
+        this.updateMessages.push(
+          new Buffer('\xFF\xFF\xFF\xFFgetserversExt Warsow ' + params.versions[i] + ' ipv4 ipv6 empty full', 'ascii')
+        );
+      }
+    } else {
+      this.updateMessages = [new Buffer('\xFF\xFF\xFF\xFFgetserversExt Warsow 22 ipv4 ipv6 empty full', 'ascii')];
     }
-  } else {
-    this.updateMessages = [new Buffer('\xFF\xFF\xFF\xFFgetserversExt Warsow 22 ipv4 ipv6 empty full', 'ascii')];
-  }
 
-  this.nextRequest = 0;
-  this.setNextRequest(0);
+    this.nextRequest = 0;
+    this.setNextRequest(0);
 
-  this.servers = [];
+    this.servers = [];
 
-  this.loop = setInterval(() => this.update(), 2000); // temporary, should be lower
-  this.update();
+    this.loop = setInterval(() => this.update(), 2000); // temporary, should be lower
+    this.update();
 
-  if ( this.debug )
-    console.log('Master Server', this);
-}
-
-// sets the timestamp for when to update next.
-MasterServer.prototype.setNextRequest = function(nextRequest) {
-  this.nextRequest = (new Date()).getTime() + nextRequest;
-}
-
-// sends all update messages to all masterservers and parses servers.
-MasterServer.prototype.update = function() {
-  // update warsow servers
-  if ( this.servers.length > 0 ) {
-    this.servers.forEach((server) => {
-      server.update();
-    })
-    clearInterval(this.loop); // temporary, test
-  }
-
-
-  if ( (new Date()).getTime() < this.nextRequest )
-    return;
-
-  if ( this.debug )
-    console.log('MS: update');
-
-  // loop over masterservers
-  this.masterservers.forEach((masterserver) => {
     if ( this.debug )
-      console.log('MS: requesting updates for', masterserver);
+      console.log('Master Server', this);
+  }
 
-    // loop over messages
-    this.updateMessages.forEach((updatemsg) => {
-      var client = dgram.createSocket('udp4');
+  // sets the timestamp for when to update next.
+  setNextRequest(nextRequest) {
+    this.nextRequest = (new Date()).getTime() + nextRequest;
+  }
 
-      client.on('message', (message, remote) => {
-        if ( this.debug )
-          console.log('MS: MasterServer response from ' + remote.address + ':' + remote.port);
-        client.close();
+  // sends all update messages to all masterservers and parses servers.
+  update() {
+    // update warsow servers
+    if ( this.servers.length > 0 ) {
+      this.servers.forEach((server) => {
+        server.update();
+      })
+      clearInterval(this.loop); // temporary, test
+    }
 
-        // *
-        // process server ips
-        // *
 
-        // chop off the header.
-        var header = '1234getserversExtResponse';
-        message = message.slice(header.length);
+    if ( (new Date()).getTime() < this.nextRequest )
+      return;
 
-        // loop over message.
-        var index = 0;
-        while ( index < message.length ) {
-          // get ip type
-          var literal_type = message.toString('ascii', index++, index );
-          var type;
+    if ( this.debug )
+      console.log('MS: update');
 
-          if ( literal_type == '\\' )
-            type = 'udp4';
-          if ( literal_type == '/' )
-            type = 'udp6';
-          // TODO: what if it's something else? rip
+    // loop over masterservers
+    this.masterservers.forEach((masterserver) => {
+      if ( this.debug )
+        console.log('MS: requesting updates for', masterserver);
 
-          // check if end of message
-          if ( message.toString('ascii', index, index + 3) == "EOT" )
-            break;
+      // loop over messages
+      this.updateMessages.forEach((updatemsg) => {
+        var client = dgram.createSocket('udp4');
 
-          // parse ip
-          var ip = '';
-          if ( type == 'udp4' )
-          {
-            ip += message.readUInt8(index) + '.'; index++;
-            ip += message.readUInt8(index) + '.'; index++;
-            ip += message.readUInt8(index) + '.'; index++;
-            ip += message.readUInt8(index);       index++;
-          }
-          else if ( type == 'udp6' ) // ipv6
-          {
-            ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
-            ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
-            ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
-            ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
-            ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
-            ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
-            ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
-            ip += message.readUInt16BE(index).toString(16);       index+=2;
-          }
-
-          // parse port
-          var port = message.readUInt16BE(index); index+=2;
-
+        client.on('message', (message, remote) => {
           if ( this.debug )
-            console.log('MS: got server ip: ' + ip + ', port: ' + port);
+            console.log('MS: MasterServer response from ' + remote.address + ':' + remote.port);
+          client.close();
 
-          // check if already in serverlist
-          var server_id = -1;
-          for ( var s in this.servers )
-          {
-            if ( this.servers[s].type == type && this.servers[s].ip == ip && this.servers[s].port == port)
-              server_id = s;
+          // *
+          // process server ips
+          // *
+
+          // chop off the header.
+          var header = '1234getserversExtResponse';
+          message = message.slice(header.length);
+
+          // loop over message.
+          var index = 0;
+          while ( index < message.length ) {
+            // get ip type
+            var literal_type = message.toString('ascii', index++, index );
+            var type;
+
+            if ( literal_type == '\\' )
+              type = 'udp4';
+            if ( literal_type == '/' )
+              type = 'udp6';
+            // TODO: what if it's something else? rip
+
+            // check if end of message
+            if ( message.toString('ascii', index, index + 3) == "EOT" )
+              break;
+
+            // parse ip
+            var ip = '';
+            if ( type == 'udp4' )
+            {
+              ip += message.readUInt8(index) + '.'; index++;
+              ip += message.readUInt8(index) + '.'; index++;
+              ip += message.readUInt8(index) + '.'; index++;
+              ip += message.readUInt8(index);       index++;
+            }
+            else if ( type == 'udp6' ) // ipv6
+            {
+              ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
+              ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
+              ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
+              ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
+              ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
+              ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
+              ip += message.readUInt16BE(index).toString(16) + ':'; index+=2;
+              ip += message.readUInt16BE(index).toString(16);       index+=2;
+            }
+
+            // parse port
+            var port = message.readUInt16BE(index); index+=2;
+
+            if ( this.debug )
+              console.log('MS: got server ip: ' + ip + ', port: ' + port);
+
+            // check if already in serverlist
+            var server_id = -1;
+            for ( var s in this.servers )
+            {
+              if ( this.servers[s].type == type && this.servers[s].ip == ip && this.servers[s].port == port)
+                server_id = s;
+            }
+
+            // create new wsw server
+            if ( server_id == -1 )
+            {
+              var server = new WarsowServer(type, ip, port);
+              this.servers.push(server);
+            }
           }
+        });
 
-          // create new wsw server
-          if ( server_id == -1 )
-          {
-            var server = new WarsowServer(type, ip, port);
-            this.servers.push(server);
-          }
-        }
-      });
-
-      client.send(updatemsg, 0, updatemsg.length, this.port, masterserver, function(err, bytes) {
-        //client.close();
-        // TODO: can this fail? afaik udp never fails to send. (maybe if address is faulty)
+        client.send(updatemsg, 0, updatemsg.length, this.port, masterserver, function(err, bytes) {
+          //client.close();
+          // TODO: can this fail? afaik udp never fails to send. (maybe if address is faulty)
+        });
       });
     });
-  });
 
-  this.setNextRequest(60000); // 1 minute
+    this.setNextRequest(60000); // 1 minute
+  }
+
 }
