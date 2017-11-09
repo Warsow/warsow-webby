@@ -81,7 +81,7 @@ class Server {
   }
 
   getTeamAlphaPlayers() {
-    return map(this.A, (x) => x);
+    return map(this.A, (x) => new Player(x));
   }
 
   getTeamBetaName() {
@@ -93,15 +93,15 @@ class Server {
   }
 
   getTeamBetaPlayers() {
-    return map(this.B, (x) => x);
+    return map(this.B, (x) => new Player(x));
   }
 
   getPlayers() {
-    return map(this.P, (x) => x);
+    return map(this.P, (x) => new Player(x));
   }
 
   getSpectators() {
-    return map(this.S, (x) => x);
+    return map(this.S, (x) => new Player(x));
   }
 
   hasTeams() {
@@ -110,6 +110,16 @@ class Server {
 
   hasSpectators() {
     return this.S;
+  }
+
+}
+
+class Player {
+
+  constructor(data) {
+    this.name = data.n;
+    this.score = data.s;
+    this.ping = data.p;
   }
 
 }

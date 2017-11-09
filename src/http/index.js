@@ -23,12 +23,21 @@ app.use(Express.static('public'));
 // Routes
 app.get('/', (req, res) => {
   return res.render('index', {
+    route: 'index',
     livereload: process.env.APP_ENV === 'local',
   });
 });
 
 app.get('/download', (req, res) => {
   return res.render('download', {
+    route: 'download',
+    livereload: process.env.APP_ENV === 'local',
+  });
+});
+
+app.get('/servers', (req, res) => {
+  return res.render('servers', {
+    route: 'servers',
     livereload: process.env.APP_ENV === 'local',
   });
 });

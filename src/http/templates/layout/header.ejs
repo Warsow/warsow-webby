@@ -23,9 +23,15 @@
       </a>
     </div>
     <div class="header-item">
-      <a class="button button-slanted button-orange"
+      <a class="button button-slanted <%= route === 'index' && 'button-orange' %>"
         href="/">
         Home
+      </a>
+    </div>
+    <div class="header-item">
+      <a class="button button-slanted <%= route === 'servers' && 'button-orange' %>"
+        href="/servers">
+        Servers
       </a>
     </div>
     <!-- Temporary text -->

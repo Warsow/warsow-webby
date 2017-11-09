@@ -9,10 +9,12 @@ import './styles/index.scss';
 
 // Import root components
 import KitchenSink from './KitchenSink.jsx';
+import ServerList from './components/ServerList.jsx';
 
 // Export components to the renderer
 const components = {
   KitchenSink,
+  ServerList,
 };
 
 // Render components

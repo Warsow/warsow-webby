@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   background-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 1em;
 }
 
 .server-header {
@@ -31,6 +32,7 @@
 }
 
 @mixin server-team($r, $g, $b) {
+  flex: 1;
   background-color: rgba($r, $g, $b, 0.1);
   // font-size: 0.9em;
 
@@ -39,14 +41,27 @@
     display: block;
     padding: 0.2em;
     margin: 0;
+
+    strong {
+      float: right;
+    }
+  }
+
+  table {
+    width: 100%;
   }
 
   th {
+    text-align: left;
     padding: 0 0.2rem;
     font-weight: bold;
+    &:first-child {
+      width: 60%;
+    }
   }
 
   td {
+    text-align: left;
     padding: 0 0.2rem;
     background: rgba($r, $g, $b, 0.25);
     &:nth-child(even) {
@@ -69,4 +84,9 @@
 
 .server-team-spec {
   @include server-team(70, 70, 70);
+}
+
+.server-spec {
+  display: inline-block;
+  margin-right: 1em;
 }
