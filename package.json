@@ -6,7 +6,8 @@
   "dependencies": {
     "@std/esm": "^0.12.4",
     "ejs": "^2.5.7",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "websocket": "^1.0.25"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
