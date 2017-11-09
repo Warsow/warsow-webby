@@ -3,7 +3,7 @@
 import EventEmitter from './EventEmitter.js';
 import { map } from './util.js';
 
-export default class Livesow {
+export default class LivesowClient {
 
   constructor() {
     this.emitter = new EventEmitter();
@@ -32,6 +32,14 @@ export default class Livesow {
       // Emit an event with current state
       this.emitter.emit('update', this.servers);
     });
+    return this;
+  }
+
+  disconnect() {
+    if (this.ws) {
+      this.ws.close();
+      this.ws = null;
+    }
     return this;
   }
 

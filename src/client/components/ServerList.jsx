@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ColorEntities from './ColorEntities.jsx';
-import Livesow from '../lib/Livesow.js';
+import LivesowClient from '../lib/LivesowClient.js';
 import { Aux, map } from '../lib/util.js';
 
 // Renders a server list
@@ -15,14 +15,21 @@ export default class ServerList extends React.Component {
       servers: {},
     };
     // Create livesow client
-    const livesow = new Livesow();
-    // Connect
-    livesow
-      .connect('ws://81.4.110.69:88')
-      .onUpdate((servers) => {
-        // Update servers and re-render the component
-        this.setState({ servers });
-      });
+    this.livesow = new LivesowClient();
+    // Subscribe to server list updates
+    this.livesow.onUpdate((servers) => {
+      // Update servers and re-render the component
+      this.setState({ servers });
+    });
+  }
+
+  componentDidMount() {
+    // Connect to livesow
+    this.livesow.connect('ws://81.4.110.69:88');
+  }
+
+  componentWillUnmount() {
+    this.livesow.disconnect();
   }
 
   render() {
