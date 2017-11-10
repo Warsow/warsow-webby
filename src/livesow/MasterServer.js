@@ -1,11 +1,10 @@
 const dgram = require('dgram');
 const WarsowServer = require('./WarsowServer');
 
-module.exports = (params) => new MasterServer(params);
-
 class MasterServer {
 
   constructor(params) {
+    this.wss = params.wss;
     this.debug = params.debug || false;
 
     this.masterservers = params.servers || ['dpmaster.deathmask.net']; // TODO: should parse & validate these..
@@ -26,8 +25,9 @@ class MasterServer {
     this.setNextRequest(0);
 
     this.servers = [];
+    this.updates = [];
 
-    this.loop = setInterval(() => this.update(), 2000); // temporary, should be lower
+    this.loop = setInterval(() => this.update(), 100); // temporary, should be lower
     this.update();
 
     if ( this.debug )
@@ -39,14 +39,14 @@ class MasterServer {
     this.nextRequest = (new Date()).getTime() + nextRequest;
   }
 
-  // sends all update messages to all masterservers and parses servers.
+// sends all update messages to all masterservers and parses servers.
   update() {
     // update warsow servers
     if ( this.servers.length > 0 ) {
       this.servers.forEach((server) => {
         server.update();
       })
-      clearInterval(this.loop); // temporary, test
+      //clearInterval(this.loop); // temporary, test
     }
 
 
@@ -149,4 +149,36 @@ class MasterServer {
     this.setNextRequest(60000); // 1 minute
   }
 
+  generateInitData(client) {
+    // TODO: match against client's filters.
+
+    var list = [];
+    this.servers.forEach( (server) => {
+      if ( server.info != {} )
+        list.push(server.info);
+    });
+
+    return list;
+  }
+
+  prepareUpdates() {
+    this.updates = [];
+    this.servers.forEach( (server) => {
+      this.updates.push(server.getUpdates());
+    });
+  }
+
+  generateUpdates(client) {
+    // TODO: match against client's filters.
+
+    var list = [];
+    this.updates.forEach( (update) => {
+      list.push(update);
+    });
+
+    return list;
+  }
+
 }
+
+module.exports = (params) => new MasterServer(params);

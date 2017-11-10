@@ -1,4 +1,5 @@
 const dgram = require('dgram');
+const _ = require('lodash');
 const ServerUpdateMsg = new Buffer('\xFF\xFF\xFF\xFFgetstatus','ascii');
 
 const TEAM_SPECTATOR = 0;
@@ -6,15 +7,15 @@ const TEAM_PLAYERS = 1;
 const TEAM_ALPHA = 2;
 const TEAM_BETA = 3;
 
-function cmplayer(a, b) {
-  if ( a.s == b.s )
+function cmplayer(a,b) {
+  if ( a.score == b.score )
     return 0;
-  return (b.s-a.s);
+  return (b.score-a.score);
 }
 
-function cmplayertime(a, b) {
-  var aa = parseInt(a.s.toString().replace(".","").replace(":",""));
-  var bb = parseInt(b.s.toString().replace(".","").replace(":",""));
+function cmplayertime(a,b) {
+  var aa = parseInt(a.score.toString().replace(".","").replace(":",""));
+  var bb = parseInt(b.score.toString().replace(".","").replace(":",""));
   if ( aa == bb )
     return 0;
   if ( aa == "no time" )
@@ -38,7 +39,12 @@ class WarsowServer {
     this.nextRequest = 0;
 
     this.rawinfo = "";
-    this.info = null;
+    this.info = {
+      type: this.type,
+      ip: this.ip,
+      port: this.port
+    };
+    this.newinfo = this.info;
     this.totalping = 0;
     this.playernames = [];
 
@@ -63,7 +69,9 @@ class WarsowServer {
 
       this.rawinfo = message.toString();
       this.parseInfo();
-      console.log("got message:", this.info);
+      /*console.log("got message:");
+      console.log(this.info);
+      console.log(this.newinfo);*/
     });
 
     client.send( ServerUpdateMsg, 0, ServerUpdateMsg.length, this.port, this.ip, function(err, bytes) {
@@ -104,45 +112,31 @@ class WarsowServer {
     if ( info.gametype != undefined )
       isRace = (info.gametype.indexOf("race") > -1);
 
-    var score = {};
-    if ( info.hasOwnProperty("g_match_score") )
-    {
-      if ( info.g_match_score == "" )
-      {
-        score = {
-          A: { n:"ALPHA", p:0, s:0 },
-          B: { n:"BETA", p:0, s:0 }
-        };
-      } else {
-        var tempscore = info.g_match_score.match(/^(.*?): (.*?) (.*?): (.*?)$/);
-        score = {
-          A: { n:tempscore[1], p:0, s:tempscore[2] },
-          B: { n:tempscore[3], p:0, s:tempscore[4] },
-        };
-      }
-    } else {
-      score = {
-        A: { n:"ALPHA", p:0, s:0 },
-        B: { n:"BETA", p:0, s:0 }
-      };
-    }
-    info.score = score;
+    info.teams = {
+      Spectators: {name:"SPECTATORS", ping:0, score:0, players:[]},
+      Players:    {name:"PLAYERS",    ping:0, score:0, players:[]},
+      Alpha:      {name:"ALPHA",      ping:0, score:0, players:[]},
+      Beta:       {name:"BETA",       ping:0, score:0, players:[]}
+    };
 
+    if ( info.hasOwnProperty("g_match_score") && info.g_match_score != "" ) {
+      info.g_match_score = info.g_match_score.trim();
+      var tempscore = info.g_match_score.match(/^(.*?): (.*?) (.*?): (.*?)$/);
+      info.teams.Alpha = {name:tempscore[1], ping:0, score:parseInt(tempscore[2]), players:[]};
+      info.teams.Beta  = {name:tempscore[3], ping:0, score:parseInt(tempscore[4]), players:[]};
+    }
+
+    var numSpec = 0;
+    var numPlayers = 0;
     var numAlpha = 0;
     var numBeta = 0;
 
-    info.S = [];
-    info.P = [];
-    info.A = [];
-    info.B = [];
-
     var totalping = 0;
     this.playernames = [];
-    //var server = this;
 
     players.forEach((player) => {
       player = player.match(/"(?:\\\\.|[^\\\\"])*"|\S+/g);
-      var team = player[3];
+      var team = parseInt(player[3]);
       if ( team > TEAM_BETA )
         return;
       var score = parseInt(player[0]);
@@ -174,100 +168,128 @@ class WarsowServer {
         }
       }
       player = {
-        p:player[1],
-        s:score,
-        n:name
-      }
-      totalping += player.p;
+        ping:parseInt(player[1]),
+        score:score,
+        name:name
+      };
 
-      if ( team == TEAM_SPECTATOR )
-      {
-        info.S.push(player);
-      } else if ( team == TEAM_PLAYERS )
-      {
-        info.P.push(player);
-      } else if ( team == TEAM_ALPHA )
-      {
-        numAlpha++;
-        info.score.A.p += parseInt(player.p);
-        info.A.push(player);
-      } else if ( team == TEAM_BETA )
-      {
-        numBeta++;
-        info.score.B.p += parseInt(player.p);
-        info.B.push(player);
+      totalping += player.ping;
+
+      switch ( team ) {
+        case TEAM_SPECTATOR:
+          numSpec++;
+          info.teams.Spectators.ping += player.ping;
+          info.teams.Spectators.players.push(player);
+          break;
+        case TEAM_PLAYERS:
+          numPlayers++;
+          info.teams.Players.ping += player.ping;
+          info.teams.Players.players.push(player);
+          break;
+        case TEAM_ALPHA:
+          numAlpha++;
+          info.teams.Alpha.ping += player.ping;
+          info.teams.Alpha.players.push(player);
+          break;
+        case TEAM_BETA:
+          numBeta++;
+          info.teams.Beta.ping += player.ping;
+          info.teams.Beta.players.push(player);
+          break;
+        default:
+          break;
       }
     });
 
-    if ( info.S.length <= 0 )
-      delete info.S;
+    if ( info.teams.Spectators.players.length <= 0 )
+      delete info.teams.Spectators;
     else
     {
       if ( isRace )
-        info.S.sort(cmplayertime);
+        info.teams.Spectators.players.sort(cmplayertime);
       else
-        info.S.sort(cmplayer);
+        info.teams.Spectators.players.sort(cmplayer);
     }
-    if ( info.P.length <= 0 )
-      delete info.P;
+    if ( info.teams.Players.players.length <= 0 )
+      delete info.teams.Players;
     else
     {
       if ( isRace )
-        info.P.sort(cmplayertime);
+        info.teams.Players.players.sort(cmplayertime);
       else
-        info.P.sort(cmplayer);
+        info.teams.Players.players.sort(cmplayer);
     }
-    if ( info.A.length <= 0 )
-      delete info.A;
+    if ( info.teams.Alpha.players.length <= 0 )
+      delete info.teams.Alpha;
     else
     {
       if ( isRace )
-        info.A.sort(cmplayertime);
+        info.teams.Alpha.players.sort(cmplayertime);
       else
-        info.A.sort(cmplayer);
+        info.teams.Alpha.players.sort(cmplayer);
     }
-    if ( info.B.length <= 0 )
-      delete info.B;
+    if ( info.teams.Beta.players.length <= 0 )
+      delete info.teams.Beta;
     else
     {
       if ( isRace )
-        info.B.sort(cmplayertime);
+        info.teams.Beta.players.sort(cmplayertime);
       else
-        info.B.sort(cmplayer);
+        info.teams.Beta.players.sort(cmplayer);
     }
 
+    if ( numSpec > 1 )
+      info.teams.Spectators.ping = Math.round(info.teams.Spectators.ping/numSpec);
+    if ( numPlayers > 1 )
+      info.teams.Players.ping = Math.round(info.teams.Players.ping/numPlayers);
     if ( numAlpha > 1 )
-      info.score.A.p = Math.round(info.score.A.p/numAlpha);
+      info.teams.Alpha.ping = Math.round(info.teams.Alpha.ping/numAlpha);
     if ( numBeta > 1 )
-      info.score.B.p = Math.round(info.score.B.p/numBeta);
+      info.teams.Beta.ping = Math.round(info.teams.Beta.ping/numBeta);
 
-    /*if ( this.info != null )
-    {
-      this.changes = obj_diff(info, this.info);
-    } else {
-      this.changes = obj_diff(info, {});
-    }*/
-    //console.log(this.changes);
 
-    this.info = info;
+    function changes(object, base) {
+      return _.transform(object, function(result, value, key) {
+        if (!_.isEqual(value, base[key])) {
+          result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
+        }
+      });
+    }
+    if ( this.info )
+      this.changes = changes(info, this.info);
+
+
+    this.newinfo = info;
     this.totalping = totalping;
 
-    /*if ( info.hasOwnProperty("tv") )
+    if ( info.hasOwnProperty("tv") )
     {
-      //console.log("[TV] " + info.tv_name + " " + info.clients + "/" + info.sv_maxclients);
-      this.setNextReq(1200000); // 20 minutes
+      this.setNextRequest(1200000); // 20 minutes
     } else {
-      //console.log("[SV] " + info.sv_hostname + " " + info.clients + "/" + info.sv_maxclients);
-
       if ( info.clients > 0 && totalping > 0 )
       {
-        this.setNextReq(1000); // 1 second
+        this.setNextRequest(1000); // 1 second
       } else if ( info.clients > 0 ) {
-        this.setNextReq(5000); // 5 seconds
+        this.setNextRequest(5000); // 5 seconds
       } else {
-        this.setNextReq(10000); // 10 seconds
+        this.setNextRequest(10000); // 10 seconds
       }
-    }*/
+    }
+  }
+
+  getUpdates() {
+    function changes(object, base) {
+      return _.transform(object, function(result, value, key) {
+        if (!_.isEqual(value, base[key])) {
+          result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
+        }
+      });
+    }
+    var ret = changes(this.newinfo, this.info );
+
+    this.info = this.newinfo;
+
+    return ret;
   }
 
 }

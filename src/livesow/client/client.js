@@ -1,7 +1,7 @@
 const wsuri = "ws://localhost:88";
 var ws;
 
-const default_filter = {"filter":{
+const default_filter = {
     Version:  "all",
     Full:     "all",
     Empty:    "dont",
@@ -10,14 +10,15 @@ const default_filter = {"filter":{
     Ping:     "dont",
     Gametype: "all",
     Name:     ""
-}};
+};
 
 function wsopen(e)
 {
     //container.innerHTML = "";
     //updateFilters();
 
-    ws.send(JSON.stringify(default_filter));
+    ws.send(JSON.stringify({op:'filters', data:default_filter}));
+    //ws.send("{}");
 }
 
 function wsclose(e)
