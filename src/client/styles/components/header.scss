@@ -1,5 +1,5 @@
 .header {
-  position: absolute;
+  position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
@@ -43,6 +43,7 @@
 
 @media screen and (max-width: 640px) {
   .header {
+    position: absolute;
     height: auto;
     min-height: 3em;
     font-size: 12pt;

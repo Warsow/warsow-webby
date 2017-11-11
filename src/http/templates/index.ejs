@@ -1,6 +1,22 @@
 <% include layout/header %>
 
 <div class="greeting">
+  <div class="greeting-arrow">
+    <i class="mdi mdi-arrow-down"></i>
+  </div>
+  <script>
+    (function () {
+      var element = document.getElementsByClassName('greeting-arrow')[0];
+      var onScroll = function () {
+        element.style.opacity = 0;
+        window.removeEventListener('scroll', onScroll);
+      };
+      if (window.scrollY !== 0) {
+        return onScroll();
+      }
+      window.addEventListener('scroll', onScroll);
+    })();
+  </script>
   <div class="greeting-stripe">
     <div class="greeting-flex container">
       <div class="greeting-text">
@@ -16,6 +32,39 @@
           Download
           <i class="mdi mdi-download"></i>
         </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="motto">
+  <div class="container">
+    <div class="motto-header">
+      <h1>Warsow is Art of Respect and Sportsmanship Over the Web</h1>
+      <img src="/images/health.svg" style="width: 3em; height: 3em">
+    </div>
+    <div class="motto-quote">
+      <div class="motto-quote-author">
+        <div class="motto-quote-symbol">&#8221;</div>
+        <div class="text-big">Fabrice Demurger</div>
+        <div class="text-small">Warsow founder</div>
+      </div>
+      <div class="motto-quote-body">
+        <p>
+          Warsow is played by some of the most skilled gamers from around the
+          world. If you're looking for a challenge, you've definitely come to
+          the right place. So here's a few tips which will improve your gaming
+          experience within Warsow:
+          <ul>
+            <li>Nobody is forced to use the tips or tutorial supplied. Freedom is what makes the right choices more worthwhile.</li>
+            <li>Hi, GLHF, GG: These never hurt by saying them - without respect or sportsmanship, there is no eSport.</li>
+            <li>Learn to lose without becoming frustrated. Each loss should be viewed as an opportunity to improve upon game knowledge.</li>
+            <li>Learn to win without pretension. Each win is an opportunity to share knowledge.</li>
+          </ul>
+        </p>
+        <p>
+          Thanks for your attention, and above all, Good Luck and Have Fun!
+        </p>
       </div>
     </div>
   </div>

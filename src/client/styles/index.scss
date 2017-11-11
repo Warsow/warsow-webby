@@ -2,10 +2,13 @@
 @import './reset.scss';
 @import './variables.scss';
 @import './typography.scss';
+@import './atomic.scss';
 
 // Components
 @import './components/button.scss';
+@import './components/greeting.scss';
 @import './components/header.scss';
+@import './components/motto.scss';
 @import './components/server.scss';
 @import './components/spacing.scss';
 
@@ -26,64 +29,10 @@
   margin-left: auto;
   margin-right: auto;
   padding: 0 2rem;
-  // text-align: center;
 }
 
 .content {
   margin-top: 6em;
-}
-
-.greeting {
-  position: relative;
-  background: {
-    image: url('/images/y37fbax.jpg');
-    size: cover;
-    position: center;
-  };
-  height: 100vh;
-
-  h1 {
-    font-size: 2rem;
-    line-height: 1em;
-    margin: 1rem 0;
-  }
-
-  p {
-    // font-size: 1.25rem;
-    line-height: 1.5em;
-  }
-}
-
-.greeting-stripe {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  background-color: fade-out($color-bg, 0.2);
-  padding: 1rem 0;
-}
-
-.greeting-flex {
-  display: flex;
-  align-items: center;
-  height: 100%;
-
-  @media screen and (max-width: 920px) {
-    display: block;
-  }
-}
-
-.greeting-download {
-  margin-left: 2rem;
-  font-size: 2.5rem;
-
-  @media screen and (max-width: 920px) {
-    margin-left: 0;
-  }
-
-  @media screen and (max-width: 460px) {
-    font-size: 1.75rem;
-  }
 }
 
 .mdi {

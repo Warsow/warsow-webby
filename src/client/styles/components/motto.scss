@@ -1,0 +1,33 @@
+.motto {
+  background-color: $color-bg-lighter;
+  padding: 1rem 0;
+}
+
+.motto-header {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.motto-quote {
+  display: flex;
+}
+
+.motto-quote-symbol {
+  font-size: 8em;
+  line-height: 1em;
+  margin-bottom: -0.5em;
+}
+
+.motto-quote-author {
+  margin-right: 2em;
+}
+
+@media screen and (max-width: 640px) {
+  .motto-quote {
+    display: block;
+  }
+
+  .motto-quote-author {
+    margin-bottom: 2em;
+  }
+}

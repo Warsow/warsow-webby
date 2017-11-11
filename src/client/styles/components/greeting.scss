@@ -1,0 +1,74 @@
+.greeting {
+  position: relative;
+  background: {
+    image: url('/images/y37fbax.jpg');
+    size: cover;
+    position: center;
+  };
+  min-height: 100vh;
+
+  h1 {
+    font-size: 2rem;
+    line-height: 1em;
+    margin: 1rem 0;
+  }
+
+  p {
+    // font-size: 1.25rem;
+    line-height: 1.5em;
+  }
+}
+
+.greeting-stripe {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  background-color: fade-out($color-bg, 0.2);
+  padding: 1em 0;
+}
+
+.greeting-flex {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  @media screen and (max-width: 920px) {
+    display: block;
+  }
+}
+
+.greeting-download {
+  margin-left: 2rem;
+  font-size: 2.5rem;
+
+  @media screen and (max-width: 920px) {
+    margin-left: 0;
+  }
+
+  @media screen and (max-width: 460px) {
+    font-size: 1.75rem;
+  }
+}
+
+@keyframes greeting-arrow-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+}
+
+.greeting-arrow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 4em;
+  line-height: 1em;
+  text-shadow: 0 0 0.25em rgba(0, 0, 0, 0.5);
+  animation: greeting-arrow-bounce 2s infinite;
+  text-align: center;
+  transition: opacity 200ms;
+}

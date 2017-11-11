@@ -1,4 +1,4 @@
-const wsuri = "ws://localhost:88";
+const wsuri = "ws://localhost:3088";
 var ws;
 
 const default_filter = {
