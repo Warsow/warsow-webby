@@ -25,7 +25,7 @@ export default class ServerList extends React.Component {
 
   componentDidMount() {
     // Connect to livesow
-    this.livesow.connect('ws://81.4.110.69:88');
+    this.livesow.connect('wss://warsow.net/livesow');
   }
 
   componentWillUnmount() {
