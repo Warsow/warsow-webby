@@ -10,7 +10,8 @@
 @import './components/header.scss';
 @import './components/motto.scss';
 @import './components/server.scss';
-@import './components/spacing.scss';
+@import './components/divider.scss';
+@import './components/icon.scss';
 
 // Misc
 .container {
@@ -22,6 +23,10 @@
   @media screen and (max-width: 460px) {
     padding: 0 1rem;
   }
+}
+
+.container-text {
+  max-width: 750px;
 }
 
 .download {

@@ -13,6 +13,7 @@
 }
 
 .button {
+  position: relative;
   display: inline-block;
   padding: 0.25em 1em;
   line-height: 1.5em;
@@ -23,12 +24,10 @@
   min-height: 1em;
   @include button-color(#555);
   margin-bottom: 0.5em;
+}
 
-  .mdi {
-    display: inline-block;
-    padding-left: 0.5em;
-    margin-right: -0.2em;
-  }
+.button-icon {
+  padding-right: 2.5em;
 }
 
 .button-slanted {
@@ -52,8 +51,7 @@
 }
 
 .button-flex {
-  display: flex;
-  justify-content: center;
+  display: block;
 
   &:last-child {
     margin-bottom: 0;
@@ -70,4 +68,11 @@
 
 .button-rose {
   @include button-color($color-rose);
+}
+
+.button-small-text {
+  display: block;
+  font-size: 0.75em;
+  line-height: 1.5em;
+  margin-bottom: 0.25em;
 }
