@@ -27,7 +27,7 @@
 }
 
 .button-icon {
-  padding-right: 2.5em;
+  padding-right: 2.4em;
 }
 
 .button-slanted {
@@ -75,4 +75,12 @@
   font-size: 0.75em;
   line-height: 1.5em;
   margin-bottom: 0.25em;
+}
+
+.button-color-discord {
+  @include button-color(#6478BF);
+}
+
+.button-color-reddit {
+  @include button-color(#E85B27);
 }
