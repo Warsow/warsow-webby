@@ -2,8 +2,8 @@
 
 ## Pre-requisites
 
-* Node.js `^8.7`
-* Yarn `^1.2`
+* Node.js `^10.4.1`
+* Yarn `^1.3.2`
 
 ## Usage
 
