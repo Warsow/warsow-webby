@@ -17,7 +17,10 @@ task_default() {
   ## Launch the server
   export APP_ENV='production'
   export APP_PORT='server.socket' # Use a unix socket
-  yarn install --production
+  # yarn install --production
+  ## Always install development dependencies, because otherwise it takes
+  ## a lot of time to shuffle dependencies on the production server
+  yarn install
   exec node --experimental-modules src/http/server.mjs "${@}"
 }
 
