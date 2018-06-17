@@ -1,5 +1,5 @@
 .servers {
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 900px) {
     display: grid;
     grid-template-areas: "x x";
     grid-gap: 20px;
@@ -72,14 +72,14 @@
     position: relative;
     background-color: rgba($color, 0.3);
     display: block;
-    padding: 0.2rem 1rem;
+    padding: 0.2rem 0.75rem;
     margin-right: 2rem;
     margin: 0;
     overflow: hidden;
 
     strong {
       position: absolute;
-      right: 1rem;
+      right: 0.75rem;
     }
   }
 
@@ -98,10 +98,10 @@
       background: rgba($color, 0.2);
     }
     &:first-child {
-      padding-left: 0.5rem;
+      padding-left: 0.75rem;
     }
     &:last-child {
-      padding-right: 0.5rem;
+      padding-right: 0.75rem;
     }
     &:nth-child(2) { width: 4.0rem; text-align: right }
     &:nth-child(3) { width: 2.2rem; text-align: right }
@@ -136,9 +136,15 @@
 
 .server-team-spec {
   @include server-team(rgba(70, 70, 70, 1));
+
+  h3 {
+    font-size: 1rem;
+    font-weight: bold;
+  }
 }
 
 .server-spec {
   display: inline-block;
-  margin: 0 1rem;
+  margin: 0 0.75rem;
+  font-style: italic;
 }

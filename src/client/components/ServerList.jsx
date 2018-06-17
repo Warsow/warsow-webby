@@ -116,7 +116,7 @@ class Server extends React.Component {
         )}
         {!server.hasTeams() && (
           <div className='server-team-players'>
-            <h3>Players</h3>
+            {/*<h3>Players</h3>*/}
             <table>
               <tbody>
                 <tr>
