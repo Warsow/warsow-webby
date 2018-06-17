@@ -57,17 +57,19 @@ class Server extends React.Component {
               <ColorEntities value={server.getName()} />
             </a>
           </div>
-          <div className='server-gametype'>
-            {server.getGameType()} / {server.getMapName()}
-          </div>
-          <div className='server-ip'>
-            {server.ip}:{server.port}
+          <div className='server-meta'>
+            <div className='server-gametype'>
+              {server.getGameType()} / {server.getMapName()}
+            </div>
+            <input className='server-ip'
+              value={server.ip + ':' + server.port}
+              onClick={(e) => e.target.select()} />
           </div>
         </div>
         {server.hasTeams() && (
           <div className='server-team-alpha'>
             <h3>
-              {server.getTeamAlphaName()}
+              <ColorEntities value={server.getTeamAlphaName()} />
               <strong>{server.getTeamAlphaScore()}</strong>
             </h3>
             <table>
@@ -91,7 +93,7 @@ class Server extends React.Component {
         {server.hasTeams() && (
           <div className='server-team-beta'>
             <h3>
-              {server.getTeamBetaName()}
+              <ColorEntities value={server.getTeamBetaName()} />
               <strong>{server.getTeamBetaScore()}</strong>
             </h3>
             <table>

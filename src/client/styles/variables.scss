@@ -8,6 +8,43 @@ $color-fg-darker: darken($color-fg, 5%);
 $color-fg-lighter: lighten($color-fg, 5%);
 
 // Brand colors
-$color-orange: #f17823;
-$color-purple: #541c7a;
-$color-rose: #93244e;
+$color-warsow-orange: #f17823;
+$color-warsow-purple: #541c7a;
+$color-warsow-pink: #93244e;
+$color-discord: #6478bf;
+$color-reddit: #e85b27;
+
+// Generic colors
+$color-none: #7f7f7f;
+$color-red: hsl(10deg, 75%, 50%);
+$color-orange: hsl(25deg, 75%, 50%);
+$color-yellow: hsl(55deg, 75%, 45%);
+$color-olive: hsl(70deg, 75%, 45%);
+$color-green: hsl(100deg, 75%, 40%);
+$color-oceanic: hsl(155deg, 75%, 45%);
+$color-teal: hsl(190deg, 75%, 45%);
+$color-blue: hsl(215deg, 75%, 50%);
+$color-violet: hsl(260deg, 75%, 45%);
+$color-purple: hsl(275deg, 75%, 30%);
+$color-pink: hsl(335deg, 75%, 40%);
+
+// Role colors
+$color-primary: $color-orange;
+$color-secondary: $color-purple;
+
+// Color map
+$color-map: (
+  ('red' $color-red)
+  ('orange' $color-orange)
+  ('yellow' $color-yellow)
+  ('olive' $color-olive)
+  ('green' $color-green)
+  ('oceanic' $color-oceanic)
+  ('teal' $color-teal)
+  ('blue' $color-blue)
+  ('violet' $color-violet)
+  ('purple' $color-purple)
+  ('pink' $color-pink)
+  ('discord' $color-discord)
+  ('reddit' $color-reddit)
+);

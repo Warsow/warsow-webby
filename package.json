@@ -7,32 +7,32 @@
     "watch": "webpack --watch"
   },
   "dependencies": {
-    "@std/esm": "^0.12.4",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "ws": "^3.3.1"
+    "ws": "^5.2.0"
   },
   "devDependencies": {
+    "@mdi/font": "^2.0.46",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
-    "extract-text-webpack-plugin": "^3.0.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.5",
-    "livereload": "^0.6.3",
+    "livereload": "^0.7.0",
     "lodash": "^4.17.4",
-    "mdi": "^2.0.46",
     "node-sass": "^4.6.0",
     "nodemon": "^1.12.1",
-    "optimize-css-assets-webpack-plugin": "^3.2.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.19.0",
+    "optimize-css-assets-webpack-plugin": "^4.0.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.0.1",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4"
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4"
   }
 }

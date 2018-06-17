@@ -58,16 +58,19 @@
   }
 }
 
-.button-orange, .button-primary {
-  @include button-color($color-orange);
+// Define color classes
+@each $x in $color-map {
+  .button-color-#{nth($x, 1)} {
+    @include button-color(darken(nth($x, 2), 0.05));
+  }
 }
 
-.button-purple {
-  @include button-color($color-purple);
+.button-primary {
+  @include button-color(darken($color-primary, 0.05));
 }
 
-.button-rose {
-  @include button-color($color-rose);
+.button-secondary {
+  @include button-color(darken($color-secondary, 0.05));
 }
 
 .button-small-text {
@@ -75,12 +78,4 @@
   font-size: 0.75em;
   line-height: 1.5em;
   margin-bottom: 0.25em;
-}
-
-.button-color-discord {
-  @include button-color(#6478BF);
-}
-
-.button-color-reddit {
-  @include button-color(#E85B27);
 }

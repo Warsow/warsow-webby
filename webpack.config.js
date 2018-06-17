@@ -8,6 +8,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const APP_ENV = process.env.APP_ENV || 'local';
 
 const config = {
+  mode: 'none',
   entry: {
     client: [
       './src/client/index.jsx',

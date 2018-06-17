@@ -10,11 +10,29 @@ PATH="${PATH}:node_modules/.bin"
 ##  Tasks
 ## --------------------------------------------------------
 
+task_default() {
+  ## Check if we need to build the bundle before running the server
+  [[ ! -d public/bundles ]] && task_build
+
+  ## Launch the server
+  export APP_ENV='production'
+  export APP_PORT='server.socket' # Use a unix socket
+  yarn install --production
+  exec node --experimental-modules src/http/server.mjs "${@}"
+}
+
+task_build() {
+  export APP_ENV='production'
+  yarn install
+  webpack --progress "${@}"
+}
+
 task_dev() {
   yarn install
   trap "task_dev_cleanup" INT TERM EXIT
   ## Application server
-  nodemon --watch src --ext js --quiet src/http/index.js & pid_server="$!"
+  nodemon --watch src --ext mjs --quiet --experimental-modules \
+    src/http/server.mjs & pid_server="$!"
   ## Build server
   webpack --watch & pid_webpack="$!"
   wait
@@ -36,10 +54,9 @@ task_kitchen_sink() {
   webpack-dev-server --progress --inline --hot
 }
 
-task_build() {
-  export APP_ENV='production'
-  yarn install
-  webpack --progress "${@}"
+task_clean() {
+  rm -rf node_modules .esm-cache public/bundles
+  rm -f yarn-error.log server.socket npm-debug.log package-lock.json
 }
 
 
@@ -47,36 +64,15 @@ task_build() {
 ##  Option parsing
 ## --------------------------------------------------------
 
-## Run a development server
-if [[ ${1} == '--dev' ]]; then
-  task_dev
-  exit ${?}
-fi
-
-## Run a kitchen-sink server
-if [[ ${1} == '--kitchen-sink' ]]; then
-  task_kitchen_sink
-  exit ${?}
-fi
-
-## Run a build
-if [[ ${1} == '--build' ]]; then
-  task_build
-  exit ${?}
-fi
-
-## Clean build and runtime artifacts
-if [[ ${1} == '--clean' ]]; then
-  rm -rf node_modules .esm-cache public/bundles
-  rm -f yarn-error.log server.socket npm-debug.log package-lock.json
-  exit
-fi
-
-## Check if we need to build the bundle before running the server
-[[ ! -d public/bundles ]] && task_build
-
-## Launch the server
-export APP_ENV='production'
-export APP_PORT='server.socket' # Use a unix socket
-yarn install --production
-exec node src/http/index.js "${@}"
+case ${1} in
+  '--build')
+    task_build ;;
+  '--dev')
+    task_dev ;;
+  '--kitchen-sink')
+    task_kitchen_sink ;;
+  '--clean')
+    task_clean ;;
+  *)
+    task_default ;;
+esac

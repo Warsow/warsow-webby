@@ -1,0 +1,29 @@
+// Get a unit-less numeric value
+@function num($value) {
+  @if type-of($value) != number {
+    @error 'Could not convert `#{$value}` - must be `type-of number`';
+    @return null;
+  }
+  @if unit($value) == '%' {
+    @return $value / 100%;
+  }
+  @return $value / ($value * 0 + 1);
+}
+
+@function darken($color, $percent) {
+  @return mix(#000, $color, num($percent) * 100%);
+}
+
+@function lighten($color, $percent) {
+  @return mix(#fff, $color, num($percent) * 100%);
+}
+
+// Get black with specified alpha
+@function black-alpha($percent) {
+  @return rgba(0, 0, 0, num($percent));
+}
+
+// Get white with specified alpha
+@function white-alpha($percent) {
+  @return rgba(255, 255, 255, num($percent));
+}

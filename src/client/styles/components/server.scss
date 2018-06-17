@@ -1,14 +1,24 @@
+.servers {
+  @media screen and (min-width: 1200px) {
+    display: grid;
+    grid-template-areas: "x x";
+    grid-gap: 20px;
+    grid-auto-columns: calc(50% - 10px);
+  }
+}
+
 .server {
   display: flex;
   flex-wrap: wrap;
-  background-color: rgba(255, 255, 255, 0.1);
-  margin-bottom: 1em;
+  align-content: flex-start;
+  background-color: #222;
+  margin-bottom: 1rem;
 }
 
 .server-header {
+  position: relative;
   width: 100%;
-  padding: 0.5em 1rem;
-  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
   // Ellipsis
   white-space: nowrap;
   overflow: hidden;
@@ -18,75 +28,117 @@
 .server-name {
   font-size: 1.25em;
   line-height: 1.5em;
+  font-weight: bold;
+}
+
+.server-meta {
+  background-color: #222;
+  @media screen and (min-width: 600px) {
+    position: absolute;
+    top: 0; right: 0;
+    padding: 0.5rem 1rem 0 0.2rem;
+    background-color: #222;
+    box-shadow: 0 0 15px #222;
+    text-align: right;
+    input {
+      text-align: right;
+    }
+  }
 }
 
 .server-gametype {
   font-size: 0.75em;
-  line-height: 1.5em;
+  line-height: 1em;
 }
 
 .server-ip {
   font-size: 0.75em;
-  line-height: 1.5em;
-  color: rgba(255, 255, 255, 0.5);
+  line-height: 1em;
+  color: white-alpha(0.5);
+  // Input specific
+  border: 0;
+  outline: 0;
+  font-family: inherit;
+  background-color: inherit;
+  width: 7rem;
 }
 
-@mixin server-team($r, $g, $b) {
-  flex: 1;
-  background-color: rgba($r, $g, $b, 0.1);
+@mixin server-team($color) {
+  flex: 1 100%;
+  background-color: rgba($color, 0.1);
   // font-size: 0.9em;
 
   h3 {
-    background-color: rgba($r, $g, $b, 0.4);
+    position: relative;
+    background-color: rgba($color, 0.3);
     display: block;
-    padding: 0.2em;
+    padding: 0.2rem 1rem;
+    margin-right: 2rem;
     margin: 0;
+    overflow: hidden;
 
     strong {
-      float: right;
+      position: absolute;
+      right: 1rem;
     }
   }
 
   table {
     width: 100%;
+    table-layout: fixed;
+  }
+
+  td, th {
+    text-align: left;
+    padding: 0 0.4rem;
+    overflow: hidden;
+    white-space: nowrap;
+    background: rgba($color, 0.25);
+    &:nth-child(even) {
+      background: rgba($color, 0.2);
+    }
+    &:first-child {
+      padding-left: 0.5rem;
+    }
+    &:last-child {
+      padding-right: 0.5rem;
+    }
+    &:nth-child(2) { width: 4.0rem; text-align: right }
+    &:nth-child(3) { width: 2.2rem; text-align: right }
   }
 
   th {
-    text-align: left;
-    padding: 0 0.2rem;
     font-weight: bold;
-    &:first-child {
-      width: 60%;
-    }
   }
 
   td {
-    text-align: left;
-    padding: 0 0.2rem;
-    background: rgba($r, $g, $b, 0.25);
+    font-style: italic;
+    background: rgba($color, 0.1);
     &:nth-child(even) {
-      background: rgba($r, $g, $b, 0.125);
+      background: rgba($color, 0.05);
     }
   }
 }
 
 .server-team-alpha {
-  @include server-team(255, 70, 45);
+  @include server-team(rgba(255, 70, 45, 1));
+  flex: 1 14rem;
 }
 
 .server-team-beta {
-  @include server-team(70, 255, 45);
+  @include server-team(rgba(70, 255, 45, 1));
+  flex: 1 14rem;
 }
 
 .server-team-players {
-  @include server-team(70, 70, 70);
+  @include server-team(rgba(70, 70, 70, 1));
 }
 
 .server-team-spec {
-  @include server-team(70, 70, 70);
+  @include server-team(rgba(70, 70, 70, 1));
 }
 
 .server-spec {
   display: inline-block;
-  margin-right: 1em;
+  margin: 0 1rem;
 }

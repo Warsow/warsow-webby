@@ -12,8 +12,11 @@ export default class Button extends React.Component {
     if (this.props.primary) {
       classNames.push('button-primary');
     }
+    if (this.props.secondary) {
+      classNames.push('button-secondary');
+    }
     if (this.props.color) {
-      classNames.push('button-' + this.props.color);
+      classNames.push('button-color-' + this.props.color);
     }
     return (
       <div className={classNames.join(' ')}>

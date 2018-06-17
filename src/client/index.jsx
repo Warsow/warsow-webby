@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Styles
-import 'mdi/css/materialdesignicons.css';
+import '@mdi/font/css/materialdesignicons.css';
 import './styles/index.scss';
 
 // Import root components

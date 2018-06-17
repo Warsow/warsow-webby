@@ -4,7 +4,7 @@ import React from 'react';
 
 const COLOR_ENTITY_REGEX = /\^[0-9]/g;
 const COLOR_ENTITY_MAP = {
-  '^0': '#000',
+  '^0': 'rgba(255, 255, 255, 0.5)', // black
   '^1': '#f00',
   '^2': '#0f0',
   '^3': '#ff0',
@@ -13,7 +13,7 @@ const COLOR_ENTITY_MAP = {
   '^6': '#f0f',
   '^7': '#fff',
   '^8': '#f80',
-  '^9': '#888',
+  '^9': 'rgba(255, 255, 255, 0.6)',
 };
 
 export default function ColorEntities(props) {
