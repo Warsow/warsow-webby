@@ -28,7 +28,7 @@ function setupRoutes(router) {
   // Not found handler
   router.use(async (req, res, next) => {
     const component = import('./components/NotFoundPage.mjs');
-    return res.send(await render(req, component));
+    return res.status(404).send(await render(req, component));
   });
 }
 
