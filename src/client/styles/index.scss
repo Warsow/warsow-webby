@@ -5,6 +5,11 @@
 @import './typography.scss';
 @import './atomic.scss';
 
+html, body {
+  min-width: $page-width-min;
+  overflow-x: hidden;
+}
+
 // Components
 @import './components/button.scss';
 @import './components/greeting.scss';
@@ -43,4 +48,17 @@
 
 .mdi {
   min-width: 1em;
+}
+
+.Greeting__background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%);
+  background: url("/images/y37fbax.jpg") no-repeat;
+  background-size: cover;
 }

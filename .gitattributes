@@ -17,3 +17,5 @@
 *.png binary
 *.jpg binary
 *.svg binary
+*.mp4 binary
+*.webm binary

@@ -4,6 +4,11 @@ import Button from './Button.mjs';
 export default function IndexPage() {
   return html`
     <div class="greeting">
+      <video class="Greeting__background-video"
+        playsinline autoplay muted loop poster="/images/y37fbax.jpg">
+        <source src="/videos/warsow-background-video.mp4" type="video/mp4">
+        <source src="/videos/warsow-background-video.webm" type="video/webm">
+      </video>
       <div class="greeting-arrow">
         <i class="mdi mdi-arrow-down"></i>
       </div>
