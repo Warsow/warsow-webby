@@ -1,9 +1,7 @@
-'use strict';
-
 import React from 'react';
 import ColorEntities from './ColorEntities.jsx';
 import LivesowClient from '../lib/LivesowClient.js';
-import { Aux, map } from '../lib/util.js';
+import { map } from '../lib/util.js';
 
 // Renders a server list
 export default class ServerList extends React.Component {
@@ -63,7 +61,8 @@ class Server extends React.Component {
             </div>
             <input className='server-ip'
               value={server.ip + ':' + server.port}
-              onClick={(e) => e.target.select()} />
+              onClick={(e) => e.target.select()}
+              readOnly />
           </div>
         </div>
         {server.hasTeams() && (

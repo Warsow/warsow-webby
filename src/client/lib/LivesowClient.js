@@ -1,5 +1,3 @@
-'use strict';
-
 import EventEmitter from './EventEmitter.js';
 import { map } from './util.js';
 

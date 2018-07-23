@@ -1,5 +1,3 @@
-'use strict';
-
 import _debounce from 'lodash/debounce';
 import _throttle from 'lodash/throttle';
 

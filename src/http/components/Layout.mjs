@@ -25,9 +25,10 @@ export default function Layout(props = {}) {
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Share:400,400i,700,700i&amp;subset=latin-ext">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,400i,500,500i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext">
-    <link rel="stylesheet" href="/bundles/client.bundle.css">
     <link rel="image_src" href="/images/warsow-logo-256x256.png">
     <link rel="shortcut icon" href="/images/warsow-logo-256x256.png">
+
+    <script src="/bundles/client.bundle.js"></script>
 
     </head>
     <body>
@@ -36,7 +37,7 @@ export default function Layout(props = {}) {
       <div class="header-flex container">
         <div class="header-item">
           <a href="/">
-            <img class="header-logo" src="images/warsow.png">
+            <img class="header-logo" src="/images/warsow.png">
           </a>
         </div>
         <div class="header-item">
@@ -72,8 +73,6 @@ export default function Layout(props = {}) {
     ${props.livereload && (
       '<script src="http://localhost:35729/livereload.js?snipver=1"></script>'
     )}
-
-    <script src="/bundles/client.bundle.js"></script>
     </body>
     </html>
   `);

@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component, Fragment } from 'react';
 import Button from './components/Button.jsx';
 import ServerList from './components/ServerList.jsx';

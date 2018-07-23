@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -18,13 +16,15 @@ const components = {
 };
 
 // Render components
-const elements = document.querySelectorAll('[react-root]');
-for (let element of elements) {
-  const name = element.getAttribute('react-root');
-  const Component = components[name];
-  if (!Component) {
-    continue;
+document.addEventListener('DOMContentLoaded', () => {
+  const elements = document.querySelectorAll('[react-root]');
+  for (let element of elements) {
+    const name = element.getAttribute('react-root');
+    const Component = components[name];
+    if (!Component) {
+      continue;
+    }
+    const props = element.dataset;
+    ReactDOM.render(<Component {...props} />, element);
   }
-  const props = element.dataset;
-  ReactDOM.render(<Component {...props} />, element);
-}
+});

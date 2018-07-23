@@ -1,5 +1,3 @@
-'use strict';
-
 export function map(collection, fn) {
   if (!collection) {
     return [];

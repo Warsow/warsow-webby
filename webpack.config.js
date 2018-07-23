@@ -2,7 +2,6 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const APP_ENV = process.env.APP_ENV || 'local';
@@ -29,7 +28,7 @@ const config = {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['babel-preset-env', {
+                ['@babel/preset-env', {
                   modules: false,
                   targets: {
                     browsers: [
@@ -41,10 +40,12 @@ const config = {
                     ],
                   },
                 }],
-                'babel-preset-react',
+                '@babel/preset-react',
               ],
               plugins: [
-                'babel-plugin-transform-decorators-legacy',
+                ['@babel/plugin-proposal-decorators', {
+                  legacy: true,
+                }],
               ],
             },
           },
@@ -52,20 +53,28 @@ const config = {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            'sass-loader',
-          ],
-        }),
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ],
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader',
-        }),
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+        ],
       },
       {
         test: /\.(png|jpg|gif|ico)$/,
@@ -91,11 +100,7 @@ const config = {
       },
     ],
   },
-  plugins: [
-    new ExtractTextPlugin({
-      filename: '[name].bundle.css',
-    }),
-  ],
+  plugins: [],
   devtool: 'source-map',
   devServer: {
     inline: true,
