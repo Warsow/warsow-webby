@@ -6,7 +6,7 @@ import Layout from './components/Layout.mjs';
  * It is necessary to abstract away the layout, and inject various runtime
  * specific variables into it.
  */
-export default function createRenderer() {
+export function createRenderer() {
   return async (req, maybeComponent, props = {}) => {
     let content = null;
     // Resolve a possible promise
