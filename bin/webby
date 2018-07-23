@@ -2,7 +2,7 @@
 set -e
 cd "$(dirname "${0}")/.."
 
-export APP_ENV='local'
+export NODE_ENV='local'
 PATH="${PATH}:node_modules/.bin"
 
 
@@ -11,54 +11,25 @@ PATH="${PATH}:node_modules/.bin"
 ## --------------------------------------------------------
 
 task_default() {
-  ## Check if we need to build the bundle before running the server
-  [[ ! -d public/bundles ]] && task_build
-
-  ## Launch the server
-  export APP_ENV='production'
-  export APP_PORT='server.socket' # Use a unix socket
-  # yarn install --production
-  ## Always install development dependencies, because otherwise it takes
-  ## a lot of time to shuffle dependencies on the production server
-  yarn install
-  exec node --experimental-modules src/http/server.mjs "${@}"
+  yarn install >&2
+  export NODE_ENV='production'
+  export PORT='server.socket' # Use a unix socket
+  exec node --experimental-modules src/server/index.mjs "${@}"
 }
 
 task_build() {
-  export APP_ENV='production'
-  yarn install
+  yarn install >&2
+  export NODE_ENV='production'
   webpack --progress "${@}"
 }
 
 task_dev() {
-  yarn install
-  trap "task_dev_cleanup" INT TERM EXIT
-  ## Application server
-  nodemon --watch src --ext mjs --quiet --experimental-modules \
-    src/http/server.mjs & pid_server="$!"
-  ## Build server
-  webpack --watch & pid_webpack="$!"
-  wait
-}
-
-task_dev_cleanup() {
-  trap - INT TERM EXIT
-  rm -rf public/bundles
-  echo -en "\nSending SIGKILL..."
-  kill -9 ${pid_server} 2>/dev/null && echo -n " server [✓]"
-  kill -9 ${pid_webpack} 2>/dev/null && echo -n " webpack [✓]"
-  echo
-  exit 0
-}
-
-task_kitchen_sink() {
-  yarn install
-  rm -rf public/bundles
-  webpack-dev-server --progress --inline --hot
+  yarn install >&2
+  exec node --experimental-modules src/server/index.mjs "${@}"
 }
 
 task_clean() {
-  rm -rf node_modules .esm-cache public/bundles
+  rm -rf node_modules public/bundles
   rm -f yarn-error.log server.socket npm-debug.log package-lock.json
 }
 
@@ -72,8 +43,6 @@ case ${1} in
     task_build ;;
   '--dev')
     task_dev ;;
-  '--kitchen-sink')
-    task_kitchen_sink ;;
   '--clean')
     task_clean ;;
   *)

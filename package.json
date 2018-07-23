@@ -1,37 +1,36 @@
 {
   "private": true,
   "scripts": {
-    "start": "node src/http/index.js",
-    "kitchen-sink": "webpack-dev-server --progress --inline --hot",
-    "build": "webpack --progress",
-    "watch": "webpack --watch"
+    "start": "node --experimental-modules src/server/index.mjs --dev",
+    "build": "webpack --progress"
   },
   "dependencies": {
     "express": "^4.16.2",
-    "ws": "^5.2.0"
+    "express-ws": "^4.0.0",
+    "lodash": "^4.17.10",
+    "ws": "^6.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.51",
-    "@babel/plugin-proposal-decorators": "^7.0.0-beta.51",
-    "@babel/preset-env": "^7.0.0-beta.51",
-    "@babel/preset-react": "^7.0.0-beta.51",
-    "@mdi/font": "^2.0.46",
-    "babel-loader": "^8.0.0-beta.3",
-    "css-loader": "^0.28.7",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.54",
+    "@babel/plugin-proposal-decorators": "^7.0.0-beta.54",
+    "@babel/preset-env": "^7.0.0-beta.54",
+    "@babel/preset-react": "^7.0.0-beta.54",
+    "@mdi/font": "^2.5.94",
+    "babel-loader": "^8.0.0-beta",
+    "css-loader": "^1.0.0",
     "file-loader": "^1.1.5",
-    "livereload": "^0.7.0",
-    "lodash": "^4.17.4",
-    "node-sass": "^4.6.0",
-    "nodemon": "^1.12.1",
-    "optimize-css-assets-webpack-plugin": "^4.0.2",
+    "node-sass": "^4.9.2",
+    "nodemon": "^1.18.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
-    "uglifyjs-webpack-plugin": "^1.0.1",
-    "webpack": "^4.12.0",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "webpack": "^4.16.1",
+    "webpack-build-notifier": "^0.1.28",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-middleware": "^3.1.3",
+    "webpack-hot-middleware": "^2.22.3"
   }
 }

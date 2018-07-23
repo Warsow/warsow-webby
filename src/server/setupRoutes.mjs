@@ -18,6 +18,11 @@ export default function setupRoutes(router) {
     return res.send(await render(req, component));
   });
 
+  // Livesow websocket endpoint
+  router.ws('/livesow', (ws, req) => {
+    // TODO: Hook into livesow connection handler, e.g. acceptConnection(ws)
+  });
+
   // Not found handler
   router.use(async (req, res, next) => {
     const component = import('./components/NotFoundPage.mjs');

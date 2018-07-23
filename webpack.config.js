@@ -2,9 +2,9 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BuildNotifierPlugin = require('webpack-build-notifier');
 
-const APP_ENV = process.env.APP_ENV || 'local';
+const NODE_ENV = process.env.NODE_ENV || 'local';
 
 const config = {
   mode: 'none',
@@ -17,6 +17,9 @@ const config = {
     path: path.resolve(__dirname, 'public/bundles'),
     publicPath: '/bundles/',
     filename: '[name].bundle.js',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
@@ -46,6 +49,7 @@ const config = {
                 ['@babel/plugin-proposal-decorators', {
                   legacy: true,
                 }],
+                '@babel/plugin-proposal-class-properties',
               ],
             },
           },
@@ -54,26 +58,16 @@ const config = {
       {
         test: /\.scss$/,
         use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'sass-loader',
-          },
+          'style-loader',
+          'css-loader',
+          'sass-loader',
         ],
       },
       {
         test: /\.css$/,
         use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
+          'style-loader',
+          'css-loader',
         ],
       },
       {
@@ -100,24 +94,42 @@ const config = {
       },
     ],
   },
-  plugins: [],
+  plugins: [
+    new BuildNotifierPlugin(),
+  ],
   devtool: 'source-map',
   devServer: {
-    inline: true,
+    // Mandatory settings
     port: 3000,
+    publicPath: '/bundles/',
     contentBase: 'public',
     historyApiFallback: {
-      index: '/kitchen-sink.html',
+      index: '/index.html',
+    },
+    // Informational flags
+    progress: false,
+    quiet: false,
+    noInfo: false,
+    // Fine-grained logging control
+    stats: {
+      assets: false,
+      builtAt: false,
+      cached: false,
+      children: false,
+      chunks: false,
+      colors: true,
+      hash: false,
+      timings: false,
+      version: false,
+      modules: false,
     },
   },
 };
 
 // Add optimization plugins when generating the final bundle
-if (APP_ENV === 'production') {
-  // Turn off sourcemaps
-  config.devtool = false;
-  // Use minifiers
+if (NODE_ENV === 'production') {
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+  config.devtool = false;
   config.plugins = config.plugins.concat([
     new webpack.DefinePlugin({
       'process.env': {
@@ -131,20 +143,12 @@ if (APP_ENV === 'production') {
         ecma: 8,
         parse: {},
         compress: {
-          unsafe: true,
+          inline: false, // Workaround, see: https://github.com/mishoo/UglifyJS2/issues/2842
           passes: 2,
         },
         output: {
           beautify: false,
           comments: false,
-        },
-      },
-    }),
-    new OptimizeCssAssetsPlugin({
-      // cssProcessor: require('cssnano'),
-      cssProcessorOptions: {
-        discardComments: {
-          removeAll: true,
         },
       },
     }),

@@ -2,21 +2,31 @@ import path from 'path';
 import http from 'http';
 import fs from 'fs';
 import Express from 'express';
+import setupExpressWs from 'express-ws';
 import setupRoutes from './setupRoutes.mjs';
 
-// // Align with project root
-// process.chdir(__dirname + '/../..');
+import { createLogger } from './logger.mjs';
+const logger = createLogger('setupServer');
+
+async function require(uri) {
+  return (await import(uri)).default;
+}
 
 // Get environment variables
-const env = process.env.APP_ENV || 'production';
-const port = process.env.APP_PORT || 3000;
+const port = process.env.PORT || 3000;
+const env = process.argv.includes('--dev') && 'local'
+  || process.env.NODE_ENV
+  || 'production';
 
 async function setupServer() {
-  // Initialize the Express app
+  // Create Express app
   const app = new Express();
 
-  // Initialize the HTTP server
+  // Create HTTP server
   const server = new http.Server(app);
+
+  // Setup websockets
+  setupExpressWs(app, server, {});
 
   // // Setup EJS templating engine
   // app.set('view engine', 'ejs');
@@ -25,21 +35,29 @@ async function setupServer() {
   // Define the folder that will be used for static assets
   app.use(Express.static('public'));
 
+  // Setup Webpack
+  if (env === 'local') {
+    logger.log('Using webpack middleware');
+    const setupWebpack = await require('./setupWebpack.mjs');
+    setupWebpack(app);
+  }
+
   // Setup routes
   setupRoutes(app);
 
   // Start the server
   server.listen(port, (err) => {
     if (err) {
-      return console.error(err);
+      return logger.error(err);
+      process.exit();
     }
     // Usual numeric port
     if (Number.isInteger(port)) {
-      console.info(`Server running on http://localhost:${port}/`);
+      logger.log(`Server running on http://localhost:${port}/`);
     }
     // Unix socket
     else {
-      console.info(`Server running on '${port}'`);
+      logger.log(`Server running on '${port}'`);
       // Set read/write permissions on a socket
       fs.chmodSync(port, '666');
       // Setup cleanup callbacks
@@ -50,14 +68,6 @@ async function setupServer() {
       });
     }
   });
-
-  // Start livereload server
-  if (env === 'local') {
-    const livereload = (await import('livereload')).default;
-    livereload
-      .createServer()
-      .watch('public');
-  }
 }
 
 function cleanUpServer() {
@@ -71,6 +81,6 @@ function cleanUpServer() {
 
 // Start-up server
 setupServer().catch((err) => {
-  console.error(err);
+  logger.error(err);
   process.exit(1);
 });
