@@ -1,22 +1,17 @@
-import path from 'path';
 import http from 'http';
 import fs from 'fs';
 import Express from 'express';
 import setupExpressWs from 'express-ws';
-import setupRoutes from './setupRoutes.mjs';
-
+import { setupRoutes } from './routes.mjs';
+import { getEnv, getBoolArgument } from './argparse.mjs';
 import { createLogger } from './logger.mjs';
-const logger = createLogger('setupServer');
-
-async function require(uri) {
-  return (await import(uri)).default;
-}
 
 // Get environment variables
-const port = process.env.PORT || 3000;
-const env = process.argv.includes('--dev') && 'local'
-  || process.env.NODE_ENV
-  || 'production';
+const env = getBoolArgument('--dev', 'local') || getEnv('NODE_ENV') || 'production';
+const port = getEnv('PORT') || (env === 'local' ? 3000 : 'server.socket');
+
+const logger = createLogger('main');
+const routeLogger = createLogger('request');
 
 async function setupServer() {
   // Create Express app
@@ -28,6 +23,12 @@ async function setupServer() {
   // Setup websockets
   setupExpressWs(app, server, {});
 
+  // Setup route logger
+  app.use((req, res, next) => {
+    routeLogger.log(req.ip, req.path);
+    next();
+  });
+
   // // Setup EJS templating engine
   // app.set('view engine', 'ejs');
   // app.set('views', path.join(__dirname, 'templates'));
@@ -38,7 +39,7 @@ async function setupServer() {
   // Setup Webpack
   if (env === 'local') {
     logger.log('Using webpack middleware');
-    const setupWebpack = await require('./setupWebpack.mjs');
+    const { setupWebpack } = await import('./webpack.mjs');
     setupWebpack(app);
   }
 

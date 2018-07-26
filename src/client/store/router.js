@@ -75,6 +75,11 @@ function routerMiddleware(store) {
       }
     }
 
+    // Scroll to top
+    if (type === TRANSITION_SUCCESS) {
+      window.scrollTo(0, 0);
+    }
+
     // Close drawer if it was opened
     const drawerOpened = state.get('drawerOpened');
     if (drawerOpened) {

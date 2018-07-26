@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { flatConnect } from '../store';
 import { Button, Link } from '../components';
 
@@ -101,11 +101,11 @@ export default flatConnect(
 
         <div className="Layout__content">
           {component}
+        </div>
 
-          <div className="Layout__footer">
-            <div className="Layout__container text-center text-dimmed">
-              Chasseur de Bots, {currentYear} ©
-            </div>
+        <div className="Layout__footer">
+          <div className="Layout__container text-center">
+            Chasseur de Bots, {currentYear} ©
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Button, Link } from '../components';
+import ScreenWidthCondition from '../components/ScreenWidthCondition';
 
 // (function () {
 //   var element = document.getElementsByClassName('Greeting__arrow')[0];
@@ -17,11 +18,15 @@ export default function KitchenSink(props) {
   return (
     <div>
       <div className="Greeting">
-        <video className="Greeting__background-video"
-          playsInline autoPlay muted loop>
-          <source src="/videos/warsow-background-video.mp4" type="video/mp4" />
-          <source src="/videos/warsow-background-video.webm" type="video/webm" />
-        </video>
+        <ScreenWidthCondition
+          test={width => width > 896}
+          render={() =>
+            <video className="Greeting__background-video"
+              playsInline autoPlay muted loop>
+              <source src="/videos/warsow-background-video.mp4" type="video/mp4" />
+              <source src="/videos/warsow-background-video.webm" type="video/webm" />
+            </video>
+          } />
         <div className="Greeting__arrow">
           <i className="icon arrow down" />
         </div>
@@ -119,8 +124,7 @@ export default function KitchenSink(props) {
           guts as gib effects.
         </p>
         <p>
-          We put great emphasis on extreme customazibility, e-sports features
-          for players and enthusiast modders.
+          We put a great emphasis on extreme customazibility and e-sports features.
         </p>
       </div>
 

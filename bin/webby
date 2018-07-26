@@ -13,7 +13,6 @@ PATH="${PATH}:node_modules/.bin"
 task_default() {
   yarn install >&2
   export NODE_ENV='production'
-  export PORT='server.socket' # Use a unix socket
   exec node --experimental-modules src/server/index.mjs "${@}"
 }
 
@@ -25,6 +24,7 @@ task_build() {
 
 task_dev() {
   yarn install >&2
+  rm -rf public/bundles
   exec node --experimental-modules src/server/index.mjs "${@}"
 }
 

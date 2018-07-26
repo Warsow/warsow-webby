@@ -37,15 +37,16 @@ const config = {
               presets: [
                 ['@babel/preset-env', {
                   modules: false,
-                  targets: {
-                    browsers: [
-                      'Chrome >= 60',
-                      'Safari >= 10.1',
-                      'iOS >= 10.3',
-                      'Firefox >= 54',
-                      'Edge >= 15',
-                    ],
-                  },
+                  useBuiltIns: 'usage',
+                  // targets: {
+                  //   browsers: [
+                  //     'Chrome >= 60',
+                  //     'Safari >= 10.1',
+                  //     'iOS >= 10.3',
+                  //     'Firefox >= 54',
+                  //     'Edge >= 15',
+                  //   ],
+                  // },
                 }],
                 '@babel/preset-react',
               ],
@@ -152,7 +153,6 @@ if (NODE_ENV === 'production') {
     new UglifyJsPlugin({
       parallel: false,
       uglifyOptions: {
-        ecma: 8,
         parse: {},
         compress: {
           inline: false, // Workaround, see: https://github.com/mishoo/UglifyJS2/issues/2842

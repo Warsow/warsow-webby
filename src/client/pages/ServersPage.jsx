@@ -34,9 +34,9 @@ export default class ServersPage extends Component {
     return (
       <div className="Layout__container Layout__padded">
         <div className="ServerCardContainer">
-          {map(this.state.servers, (server, i) => {
-            return <ServerCard key={i} server={server} />;
-          })}
+          {map(this.state.servers, (server, i) =>
+            <ServerCard key={i} server={server} />
+          )}
         </div>
       </div>
     );
@@ -78,13 +78,13 @@ function ServerCard(props) {
                 <th>Score</th>
                 <th>Ping</th>
               </tr>
-              {server.getTeamAlphaPlayers().map((x, i) => (
+              {server.getTeamAlphaPlayers().map((x, i) =>
                 <tr key={i}>
                   <td><ColorTokens value={x.name} /></td>
                   <td>{x.score}</td>
                   <td>{x.ping}</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
@@ -102,13 +102,13 @@ function ServerCard(props) {
                 <th>Score</th>
                 <th>Ping</th>
               </tr>
-              {server.getTeamBetaPlayers().map((x, i) => (
+              {server.getTeamBetaPlayers().map((x, i) =>
                 <tr key={i}>
                   <td><ColorTokens value={x.name} /></td>
                   <td>{x.score}</td>
                   <td>{x.ping}</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
@@ -123,13 +123,13 @@ function ServerCard(props) {
                 <th>Score</th>
                 <th>Ping</th>
               </tr>
-              {server.getPlayers().map((x, i) => (
+              {server.getPlayers().map((x, i) =>
                 <tr key={i}>
                   <td><ColorTokens value={x.name} /></td>
                   <td>{x.score}</td>
                   <td>{x.ping}</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
@@ -137,11 +137,11 @@ function ServerCard(props) {
       {server.hasSpectators() && (
         <div className="ServerCard__team ServerCard__team--spec">
           <h3>Spectators</h3>
-          {server.getSpectators().map((x, i) => (
+          {server.getSpectators().map((x, i) =>
             <div key={i} className="ServerCard__spec">
               <ColorTokens value={x.name} /> {x.ping}
             </div>
-          ))}
+          )}
         </div>
       )}
     </div>

@@ -1,5 +1,11 @@
 $Layout__navbar-height: 3.5rem;
 
+.Layout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 .Layout__container {
   max-width: 1200px;
   margin-left: auto;
@@ -35,6 +41,7 @@ $Layout__navbar-height: 3.5rem;
 }
 
 .Layout__drawer {
+  display: none;
   position: absolute;
   top: 3rem;
   left: 0;
@@ -42,6 +49,10 @@ $Layout__navbar-height: 3.5rem;
   padding: 1rem;
   background: $color-bg-lighter;
   z-index: 100;
+
+  @media screen and (max-width: $page-width-mobile) {
+    display: block;
+  }
 }
 
 .Layout__drawer-item {
@@ -49,11 +60,13 @@ $Layout__navbar-height: 3.5rem;
 }
 
 .Layout__content {
+  flex: 1;
   margin-top: $Layout__navbar-height;
   margin-bottom: 2rem;
 }
 
 .Layout__footer {
-  padding-top: 1rem;
   margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  color: white-alpha(0.25);
 }

@@ -1,6 +1,7 @@
 .Greeting {
   position: relative;
   min-height: calc(100vh - 3.5rem);
+  overflow: hidden;
 
   h1 {
     font-size: 2rem;
@@ -12,6 +13,15 @@
     // font-size: 1.25rem;
     line-height: 1.5em;
   }
+
+  @media screen and (max-width: $page-width-mobile) {
+    min-height: auto;
+    background: {
+      image: url('/images/y37fbax.jpg');
+      size: cover;
+      position: center;
+    };
+  }
 }
 
 .Greeting__stripe {
@@ -21,6 +31,13 @@
   right: 0;
   background-color: fade-out($color-bg, 0.2);
   padding: 1em 0;
+
+  @media screen and (max-width: $page-width-mobile) {
+    position: static;
+    top: 0;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
 }
 
 .Greeting__flex {
@@ -28,7 +45,7 @@
   align-items: center;
   height: 100%;
 
-  @media screen and (max-width: 920px) {
+  @media screen and (max-width: $page-width-mobile) {
     display: block;
   }
 }
@@ -37,7 +54,7 @@
   margin-left: 2rem;
   font-size: 2.5rem;
 
-  @media screen and (max-width: 920px) {
+  @media screen and (max-width: $page-width-mobile) {
     margin-left: 0;
   }
 
@@ -70,6 +87,10 @@
   animation: Greeting__arrow-bounce 2s infinite;
   text-align: center;
   transition: opacity 200ms;
+
+  @media screen and (max-width: $page-width-mobile) {
+    display: none;
+  }
 }
 
 .Greeting__background-video {
@@ -81,7 +102,11 @@
   width: auto;
   height: auto;
   transform: translateX(-50%) translateY(-50%);
+  background-color: #000;
   // background: url("/images/y37fbax.jpg") no-repeat;
-  background: #000;
-  background-size: cover;
+  // background-size: cover;
+
+  @media screen and (max-width: $page-width-mobile) {
+    display: none;
+  }
 }
