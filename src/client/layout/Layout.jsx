@@ -8,8 +8,11 @@ import DownloadPage from '../pages/DownloadPage.jsx';
 import ServersPage from '../pages/ServersPage.jsx';
 import NotFoundPage from '../pages/NotFoundPage.jsx';
 
-function getRoutedComponent(route) {
+function getRoutedComponent(route, transitionError) {
   if (!route) {
+    if (transitionError) {
+      return <NotFoundPage />;
+    }
     return null;
   }
   const { name, params } = route;
@@ -32,11 +35,12 @@ export default flatConnect(
   state => ({
     drawerOpened: state.get('drawerOpened'),
     route: state.getIn(['router', 'route']),
+    transitionError: state.getIn(['router', 'transitionError']),
   }),
   function Layout(props) {
-    const { drawerOpened, state, route, dispatch } = props;
+    const { drawerOpened, state, route, transitionError, dispatch } = props;
     const routeName = route && route.name;
-    const component = getRoutedComponent(route);
+    const component = getRoutedComponent(route, transitionError);
     const currentYear = new Date().getFullYear();
     return (
       <div className="Layout">
