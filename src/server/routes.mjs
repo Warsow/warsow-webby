@@ -1,4 +1,15 @@
+import { createLogger } from './logger.mjs';
+
 const PUBLIC_DIR = process.cwd() + '/public';
+
+const SPA_ROUTES = [
+  '/',
+  '/servers',
+  '/download',
+  '/kitchen-sink',
+];
+
+const logger = createLogger('routes');
 
 export function setupRoutes(router) {
 
@@ -8,7 +19,12 @@ export function setupRoutes(router) {
   });
 
   router.get('*', (req, res) => {
-    return res.sendFile(PUBLIC_DIR + '/index.html');
+    if (SPA_ROUTES.includes(req.path)) {
+      return res.sendFile(PUBLIC_DIR + '/index.html');
+    }
+    // Signal 404
+    logger.log('404');
+    return res.status(404).sendFile(PUBLIC_DIR + '/index.html');
   });
 
 }

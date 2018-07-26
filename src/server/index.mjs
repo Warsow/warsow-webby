@@ -25,7 +25,7 @@ async function setupServer() {
 
   // Setup route logger
   app.use((req, res, next) => {
-    routeLogger.log(req.ip, req.path);
+    routeLogger.log(req.ip || '[no ip]', req.path);
     next();
   });
 
