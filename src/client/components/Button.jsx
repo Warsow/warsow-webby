@@ -1,23 +1,43 @@
 import React from 'react';
+import { classes } from '../utils.js';
 
 export default function Button(props) {
-  const classNames = ['button'];
-  if (props.slanted) {
-    classNames.push('button-slanted');
-  }
-  if (props.primary) {
-    classNames.push('button-primary');
-  }
-  if (props.secondary) {
-    classNames.push('button-secondary');
-  }
-  if (props.color) {
-    classNames.push('button-color-' + props.color);
-  }
+  const {
+    // Custom behavior
+    as, icon, slanted, underlined, fluid, fitted, primary, secondary, bright, color,
+    text, smallText, content, children,
+    // Passthrough
+    onClick,
+    ...rest
+  } = props;
+  const ElementType = as;
+  const className = classes('Button', props.className, [
+    slanted && 'Button--slanted',
+    underlined && 'Button--underlined',
+    fluid && 'Button--fluid',
+    fitted && 'Button--fitted',
+    primary && 'Button--primary',
+    secondary && 'Button--secondary',
+    bright && 'Button--bright',
+    color && 'Button--color-' + color,
+  ]);
   return (
-    <div className={classNames.join(' ')}>
-      {props.text}
-      {props.children}
-    </div>
+    <ElementType {...rest} {...{className, onClick}}>
+      {icon && (
+        <i className={'Button__icon icon ' + icon} />
+      )}
+      {text}
+      {smallText && (
+        <div className="Button__small-text">
+          {smallText}
+        </div>
+      )}
+      {children || content}
+    </ElementType>
   );
 }
+
+Button.defaultProps = {
+  as: 'div',
+  role: 'button',
+};

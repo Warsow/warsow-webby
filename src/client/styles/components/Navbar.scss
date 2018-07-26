@@ -1,0 +1,53 @@
+.Navbar {
+  height: 100%;
+  background: $color-bg-lighter;
+  color: $color-fg-lighter;
+}
+
+.Navbar__items {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.Navbar__items-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.Navbar__item {
+  // margin-right: 1rem;
+
+  @media screen and (max-width: $page-width-mobile) {
+    display: none;
+  }
+
+  .Button {
+    // font-size: 1.2em;
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+
+.Navbar__item--logo img {
+  height: 2.2rem;
+  margin-right: 0.75rem;
+  // A little bit of offset
+  position: relative;
+  top: 3px;
+}
+
+.Navbar__item--menu {
+  display: none;
+  font-size: 22pt;
+  margin-left: -0.75em;
+  margin-right: 0.25em;
+  padding: 0.5em 0.75em;
+  cursor: pointer;
+
+  @media screen and (max-width: $page-width-mobile) {
+    display: block;
+  }
+}

@@ -3,18 +3,18 @@ import Button from './Button.mjs';
 
 export default function IndexPage() {
   return html`
-    <div class="greeting">
+    <div class="Greeting">
       <video class="Greeting__background-video"
         playsinline autoplay muted loop poster="/images/y37fbax.jpg">
         <source src="/videos/warsow-background-video.mp4" type="video/mp4">
         <source src="/videos/warsow-background-video.webm" type="video/webm">
       </video>
-      <div class="greeting-arrow">
+      <div class="Greeting__arrow">
         <i class="mdi mdi-arrow-down"></i>
       </div>
       <script>
         (function () {
-          var element = document.getElementsByClassName('greeting-arrow')[0];
+          var element = document.getElementsByClassName('Greeting__arrow')[0];
           var onScroll = function () {
             element.style.opacity = 0;
             window.removeEventListener('scroll', onScroll);
@@ -25,9 +25,9 @@ export default function IndexPage() {
           window.addEventListener('scroll', onScroll);
         })();
       </script>
-      <div class="greeting-stripe">
-        <div class="greeting-flex container">
-          <div class="greeting-text">
+      <div class="Greeting__stripe">
+        <div class="Greeting__flex container">
+          <div class="Greeting__text">
             <h1>The fastest sport on the web!</h1>
             <p>
               Set in a futuristic cartoonish world, Warsow is a completely free
@@ -49,7 +49,7 @@ export default function IndexPage() {
               })}
             </p>
           </div>
-          <div class="greeting-download">
+          <div class="Greeting__download">
             ${Button('Download', {
               classNames: ['text-center'],
               color: 'purple',

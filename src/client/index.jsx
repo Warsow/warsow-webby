@@ -1,30 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import createStore from './createStore.js';
 
-// Styles
-import '@mdi/font/css/materialdesignicons.css';
 import './styles/index.scss';
+import './styles/semantic/semantic.less';
 
-// Import root components
-import KitchenSink from './KitchenSink.jsx';
-import ServerList from './components/ServerList.jsx';
+const store = createStore();
 
-// Export components to the renderer
-const components = {
-  KitchenSink,
-  ServerList,
-};
-
-// Render components
-document.addEventListener('DOMContentLoaded', () => {
-  const elements = document.querySelectorAll('[react-root]');
-  for (let element of elements) {
-    const name = element.getAttribute('react-root');
-    const Component = components[name];
-    if (!Component) {
-      continue;
-    }
-    const props = element.dataset;
-    ReactDOM.render(<Component {...props} />, element);
+function renderLayout() {
+  const MOUNT_NODE = document.querySelector('.react-root');
+  try {
+    const Layout = require('./layout').Layout;
+    const component = (
+      <Provider store={store}>
+        <Layout />
+      </Provider>
+    );
+    ReactDOM.unmountComponentAtNode(MOUNT_NODE);
+    ReactDOM.render(component, MOUNT_NODE);
   }
+  catch (err) {
+    console.error(err);
+    // TODO: Custom error handler
+  }
+}
+
+// Make Layout component hot reloadable
+if (module.hot) {
+  module.hot.accept(['./layout', './store'], renderLayout);
+}
+
+window.addEventListener('load', () => {
+  renderLayout();
 });

@@ -1,4 +1,4 @@
-.servers {
+.ServerCardContainer {
   @media screen and (min-width: 900px) {
     display: grid;
     grid-template-areas: "x x";
@@ -7,7 +7,7 @@
   }
 }
 
-.server {
+.ServerCard {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -15,7 +15,7 @@
   margin-bottom: 1rem;
 }
 
-.server-header {
+.ServerCard__header {
   position: relative;
   width: 100%;
   padding: 0.5rem 1rem;
@@ -25,13 +25,13 @@
   text-overflow: ellipsis;
 }
 
-.server-name {
+.ServerCard__name {
   font-size: 1.25em;
   line-height: 1.5em;
   font-weight: bold;
 }
 
-.server-meta {
+.ServerCard__meta {
   background-color: #222;
   @media screen and (min-width: 600px) {
     position: absolute;
@@ -46,12 +46,12 @@
   }
 }
 
-.server-gametype {
+.ServerCard__gametype {
   font-size: 0.75em;
   line-height: 1em;
 }
 
-.server-ip {
+.ServerCard__ip {
   font-size: 0.75em;
   line-height: 1em;
   color: white-alpha(0.5);
@@ -120,21 +120,23 @@
   }
 }
 
-.server-team-alpha {
+.ServerCard__team {}
+
+.ServerCard__team--alpha {
   @include server-team(rgba(255, 70, 45, 1));
   flex: 1 14rem;
 }
 
-.server-team-beta {
+.ServerCard__team--beta {
   @include server-team(rgba(70, 255, 45, 1));
   flex: 1 14rem;
 }
 
-.server-team-players {
+.ServerCard__team--players {
   @include server-team(rgba(70, 70, 70, 1));
 }
 
-.server-team-spec {
+.ServerCard__team--spec {
   @include server-team(rgba(70, 70, 70, 1));
 
   h3 {
@@ -143,7 +145,7 @@
   }
 }
 
-.server-spec {
+.ServerCard__spec {
   display: inline-block;
   margin: 0 0.75rem;
   font-style: italic;

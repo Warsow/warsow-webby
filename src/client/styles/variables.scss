@@ -1,5 +1,6 @@
 // Page width
 $page-width-min: 22rem;
+$page-width-mobile: 56rem;
 
 // Main colors
 $color-bg: #111;
@@ -21,19 +22,19 @@ $color-reddit: #e85b27;
 $color-none: #7f7f7f;
 $color-red: hsl(10deg, 75%, 50%);
 $color-orange: hsl(25deg, 75%, 50%);
-$color-yellow: hsl(55deg, 75%, 45%);
-$color-olive: hsl(70deg, 75%, 45%);
-$color-green: hsl(100deg, 75%, 40%);
-$color-oceanic: hsl(155deg, 75%, 45%);
-$color-teal: hsl(190deg, 75%, 45%);
-$color-blue: hsl(215deg, 75%, 50%);
-$color-violet: hsl(260deg, 75%, 45%);
-$color-purple: hsl(275deg, 75%, 30%);
-$color-pink: hsl(335deg, 75%, 40%);
+$color-yellow: hsl(50deg, 75%, 50%);
+$color-olive: hsl(70deg, 75%, 50%);
+$color-green: hsl(100deg, 75%, 50%);
+$color-oceanic: hsl(155deg, 75%, 50%);
+$color-teal: hsl(190deg, 75%, 50%);
+$color-blue: hsl(215deg, 75%, 52%);
+$color-violet: hsl(255deg, 90%, 56%);
+$color-purple: hsl(275deg, 75%, 52%);
+$color-pink: hsl(335deg, 75%, 48%);
 
 // Role colors
-$color-primary: $color-orange;
-$color-secondary: $color-purple;
+$color-primary: hsl(25deg, 75%, 50%);
+$color-secondary: hsl(275deg, 75%, 30%);
 
 // Color map
 $color-map: (

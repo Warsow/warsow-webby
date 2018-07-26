@@ -1,0 +1,11 @@
+.Grid--flex {
+  display: flex;
+
+  @media screen and (max-width: $page-width-mobile) {
+    display: block;
+  }
+}
+
+.Grid__item {
+  flex: 1;
+}

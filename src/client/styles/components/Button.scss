@@ -1,0 +1,202 @@
+.Button {
+  position: relative;
+  display: inline-block;
+  padding: 0.25em 1em;
+  line-height: 1.5em;
+  transition: background-color 100ms;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  min-height: 1em;
+  margin-bottom: 0.5em;
+  border-radius: 0.2em;
+
+  // Compensate for skewage
+  margin-right: 0.2em;
+  margin-left: 0.3em;
+
+  // Color mixin
+  @mixin apply-color($color-bg, $color-fg: #fff) {
+    background: $color-bg;
+    color: $color-fg;
+    &:hover {
+      background: lighten($color-bg, 10%);
+    }
+  }
+
+  // Default color
+  @include apply-color(#444);
+
+  &:not(.Button--slanted):not(.Button--underlined) {
+    // Primary color
+    &.Button--primary {
+      @include apply-color(darken($color-primary, 0.05));
+    }
+
+    // Secondary color
+    &.Button--secondary {
+      @include apply-color(darken($color-secondary, 0.05));
+    }
+
+    // Custom color
+    @each $x in $color-map {
+      &.Button--color-#{nth($x, 1)} {
+        $color-bg: darken(nth($x, 2), 0.2);
+        @include apply-color($color-bg, #fff);
+
+        &.Button--bright {
+          $color-bg: darken(nth($x, 2), 0);
+          @include apply-color($color-bg, #fff);
+        }
+      }
+    }
+  }
+}
+
+.Button:last-child {
+  margin-right: 0;
+}
+
+
+//  Slanted modifier
+// --------------------------------------------------------
+
+.Button--slanted {
+  position: relative;
+  background-color: transparent !important;
+  z-index: 0;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    transform: skewX(-20deg);
+    z-index: -1;
+    transition: background-color 100ms;
+    border-radius: 0.1em;
+  }
+
+  // Color mixin
+  @mixin apply-color($color-bg, $color-fg: #fff) {
+    color: $color-fg;
+
+    &:before {
+      background: $color-bg;
+    }
+
+    &:hover:before {
+      background: lighten($color-bg, 10%);
+    }
+  }
+
+  // Default color
+  @include apply-color(#444);
+
+  // Primary color
+  &.Button--primary {
+    @include apply-color(darken($color-primary, 0.05));
+  }
+
+  // Secondary color
+  &.Button--secondary {
+    @include apply-color(darken($color-secondary, 0.05));
+  }
+
+  // Custom color
+  @each $x in $color-map {
+    &.Button--color-#{nth($x, 1)} {
+      $color-bg: darken(nth($x, 2), 0.2);
+      @include apply-color($color-bg, #fff);
+
+      &.Button--bright {
+        $color-bg: darken(nth($x, 2), 0);
+        @include apply-color($color-bg, #fff);
+      }
+    }
+  }
+}
+
+
+//  Underlined modifier
+// --------------------------------------------------------
+
+.Button--underlined {
+  position: relative;
+  background-color: transparent;
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    transition: background-color 100ms;
+    border-radius: 0.1em;
+  }
+
+  &:hover {
+    background-color: white-alpha(10%);
+  }
+
+  // Color mixin
+  @mixin apply-color($color-bg, $color-fg: #fff) {
+    color: $color-fg;
+
+    &:before {
+      background: $color-bg;
+    }
+
+    &:hover:before {
+      background: lighten($color-bg, 10%);
+    }
+  }
+
+  // Default color
+  @include apply-color(#444);
+
+  // Primary color
+  &.Button--primary {
+    @include apply-color(darken($color-primary, 0.05));
+  }
+
+  // Secondary color
+  &.Button--secondary {
+    @include apply-color(darken($color-secondary, 0.05));
+  }
+
+  // Custom color
+  @each $x in $color-map {
+    &.Button--color-#{nth($x, 1)} {
+      $color-bg: darken(nth($x, 2), 0);
+      @include apply-color($color-bg, #fff);
+
+      &.Button--bright {
+        $color-bg: lighten(nth($x, 2), 0.5);
+        @include apply-color($color-bg, #fff);
+      }
+    }
+  }
+}
+
+.Button--fluid {
+  display: block;
+}
+
+.Button--fitted {
+  margin: 0;
+}
+
+
+//  Elements
+// --------------------------------------------------------
+
+.Button__icon {
+  padding-right: 0.2em;
+}
+
+.Button__small-text {
+  display: block;
+  font-size: 0.75em;
+  line-height: 1.5em;
+  margin-bottom: 0.25em;
+}

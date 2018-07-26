@@ -1,0 +1,59 @@
+$Layout__navbar-height: 3.5rem;
+
+.Layout__container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 2rem;
+
+  @media screen and (max-width: 460px) {
+    padding: 0 1rem;
+  }
+}
+
+.Layout__container--text {
+  max-width: 800px;
+}
+
+.Layout__padded {
+  padding-top: 1rem;
+}
+
+.Layout__navbar {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $Layout__navbar-height;
+  min-width: $page-width-min;
+
+  @media screen and (max-width: $page-width-mobile) {
+    position: absolute;
+    // height: 3rem;
+  }
+}
+
+.Layout__drawer {
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: $color-bg-lighter;
+  z-index: 100;
+}
+
+.Layout__drawer-item {
+  margin: 0.5rem 0;
+}
+
+.Layout__content {
+  margin-top: $Layout__navbar-height;
+  margin-bottom: 2rem;
+}
+
+.Layout__footer {
+  padding-top: 1rem;
+  margin-top: 3rem;
+}

@@ -20,6 +20,10 @@ const config = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      // Trick Semantic UI into picking up our provided theme
+      '../../theme.config$': path.join(__dirname, 'src/client/styles/semantic/theme.config'),
+    },
   },
   module: {
     rules: [
@@ -61,6 +65,14 @@ const config = {
           'style-loader',
           'css-loader',
           'sass-loader',
+        ],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'less-loader',
         ],
       },
       {

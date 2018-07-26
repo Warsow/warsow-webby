@@ -1,31 +1,44 @@
 html, body {
-  font-family: 'Share', sans-serif;
+  font-family: 'Fira Sans Condensed', sans-serif;
   font-size: 14pt;
-  // font-weight: $font-weight-text;
   line-height: 1.5em;
   background: $color-bg;
   color: $color-fg;
 }
 
-span, a, img, i, u, b, small, strong {
-  display: inline;
-}
-
-h1, h2, h3 {
-  margin: 0.5em 0;
+h1, h2, h3, h4, h5, h6 {
+  margin: 0.75em 0 0.5em;
   line-height: 1.1em;
 }
 
 h1 {
   font-size: 2rem;
+  font-weight: 500;
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+h4, h5, h6 {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+small {
+  font-size: 0.75em;
+  line-height: 1.1em;
+}
+
+big {
+  font-size: 1.25em;
+  line-height: 1.1em;
 }
 
 i {
@@ -33,7 +46,7 @@ i {
 }
 
 b, strong {
-  font-weight: bold;
+  font-weight: 500;
 }
 
 p {

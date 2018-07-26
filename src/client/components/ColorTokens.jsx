@@ -1,7 +1,7 @@
 import React from 'react';
 
-const COLOR_ENTITY_REGEX = /\^[0-9\^]/g;
-const COLOR_ENTITY_MAP = {
+const COLOR_TOKEN_REGEX = /\^[0-9\^]/g;
+const COLOR_TOKEN_MAP = {
   '^0': 'rgba(255, 255, 255, 0.5)', // black
   '^1': '#f00',
   '^2': '#0f0',
@@ -14,16 +14,16 @@ const COLOR_ENTITY_MAP = {
   '^9': 'rgba(255, 255, 255, 0.6)',
 };
 
-export default function ColorEntities(props) {
-  const strings = props.value.split(COLOR_ENTITY_REGEX);
-  const entities = props.value.match(COLOR_ENTITY_REGEX);
+export default function ColorTokens(props) {
+  const strings = props.value.split(COLOR_TOKEN_REGEX);
+  const tokens = props.value.match(COLOR_TOKEN_REGEX);
   return strings
-    // Zip entities and strings together
+    // Zip tokens and strings together
     .reduce((pairs, str, i) => {
-      // Get entity
-      const entity = entities && entities[i - 1];
+      // Get token
+      const token = tokens && tokens[i - 1];
       // Handle escape sequence
-      if (entity === '^^') {
+      if (token === '^^') {
         str = '^' + str;
       };
       // Skip empty strings
@@ -31,15 +31,15 @@ export default function ColorEntities(props) {
         return pairs;
       }
       // Add next pair
-      pairs.push([entity, str]);
+      pairs.push([token, str]);
       return pairs;
     }, [])
     // Map pairs to elements
-    .map(([entity, str], i) => {
-      if (!entity) {
+    .map(([token, str], i) => {
+      if (!token) {
         return str;
       }
-      const color = COLOR_ENTITY_MAP[entity];
+      const color = COLOR_TOKEN_MAP[token];
       return (
         <span key={i} style={{ color }}>{str}</span>
       );

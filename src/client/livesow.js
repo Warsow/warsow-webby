@@ -1,7 +1,7 @@
-import EventEmitter from './EventEmitter.js';
-import { map } from './util.js';
+import { EventEmitter } from './utils.js';
+import { map } from 'lodash';
 
-export default class LivesowClient {
+export class LivesowClient {
 
   constructor() {
     this.emitter = new EventEmitter();
