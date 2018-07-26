@@ -23,7 +23,6 @@ export function setupRoutes(router) {
       return res.sendFile(PUBLIC_DIR + '/index.html');
     }
     // Signal 404
-    logger.log('404');
     return res.status(404).sendFile(PUBLIC_DIR + '/index.html');
   });
 

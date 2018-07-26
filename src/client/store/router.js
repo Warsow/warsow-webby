@@ -25,7 +25,7 @@ export const ROUTES = [
 ];
 
 const ROUTER_OPTIONS = {
-  defaultRoute: 'index',
+  // defaultRoute: 'index',
 };
 
 export const router = createRouter(ROUTES, ROUTER_OPTIONS)
