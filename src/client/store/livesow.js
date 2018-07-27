@@ -68,7 +68,7 @@ export function livesowReducer(state, action) {
       const index = servers.findIndex(x => x.get('id') === payload.id)
       if (index === -1) {
         console.log('livesow:reducer', 'did not find server object', action);
-        return state;
+        return servers;
       }
       return servers.set(index, servers.get(index).merge(payload));
     });
@@ -99,7 +99,7 @@ export function livesowReducer(state, action) {
       const index = players.findIndex(x => x.get('id') === payload.id)
       if (index === -1) {
         console.log('livesow:reducer', 'did not find player object', action);
-        return state;
+        return players;
       }
       return players.set(index, players.get(index).merge(payload));
     });
