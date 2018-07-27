@@ -31,12 +31,14 @@ export function createReducer() {
 import { applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createRouterMiddleware } from './router.js';
+import { createLivesowMiddleware } from './livesow.js';
 
 // Export middlewares as a store enhancer
 export function createEnhancer() {
   const middlewares = [
     thunkMiddleware,
     createRouterMiddleware(),
+    createLivesowMiddleware(),
   ];
   return applyMiddleware(...middlewares);
 }

@@ -8,6 +8,9 @@ import KitchenSink from '../pages/KitchenSink.jsx';
 import LoginPage from '../pages/LoginPage.jsx';
 import NotFoundPage from '../pages/NotFoundPage.jsx';
 import ServersPage from '../pages/ServersPage.jsx';
+import { process } from 'ipaddr.js';
+
+const IS_PRODUCTION = process && process.env && process.env === 'production';
 
 function getRoutedComponent(route, transitionError) {
   if (!route) {
@@ -74,12 +77,19 @@ export default flatConnect(
                   routeName="servers"
                   text="Servers" />
               </div>
-              <div className="Navbar__items-right">
+              {IS_PRODUCTION || (
                 <div className="Navbar__item">
-                  <Button as={Link} underlined primary={routeName === 'login'}
-                    routeName="login"
-                    text="Login" />
+                  <Button as={Link} underlined primary={routeName === 'kitchenSink'}
+                    routeName="kitchenSink"
+                    text="Kitchen Sink" />
                 </div>
+              )}
+              <div className="Navbar__item">
+                <Button as={Link} underlined primary={routeName === 'login'}
+                  routeName="login"
+                  text="Login" />
+              </div>
+              <div className="Navbar__items-right">
                 <div className="Navbar__item">
                   <Button as={Link} slanted secondary
                     routeName="download"
