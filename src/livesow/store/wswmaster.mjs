@@ -7,6 +7,7 @@ import { createLogger } from '../../server/logger.mjs';
 const logger = createLogger('WswMaster');
 
 const IGNORE_UDP6 = true;
+const MASTER_INTERVAL = 60000;
 
 const OOB_PADDING = '\xFF\xFF\xFF\xFF';
 
@@ -61,6 +62,10 @@ export class WswMaster extends EventEmitter {
         this.sendRequest(server, protocol);
       });
     });
+
+    setTimeout( () => {
+      this.sendRequests();
+    }, MASTER_INTERVAL);
   }
 
   async sendRequest(server, protocol) {
@@ -107,14 +112,23 @@ export class WswMaster extends EventEmitter {
       this.emit('foundServer', {ip: ip, port: port});
       
       WswServer.getOrCreate(family, ip, port, (server) => {
-        server.on('serverUpdate', (server) => {
-          logger.log(`serverUpdate ${server}`);
+        server.on('serverAdd', (server, changes) => {
+          this.emit('serverAdd', server, changes);
         });
-        server.on('serverDelete', (server) => {
-          logger.log(`serverDelete ${server}`);
+        server.on('serverUpdate', (server, changes) => {
+          this.emit('serverUpdate', server, changes);
         });
-        server.on('serverAdd', (server) => {
-          logger.log(`serverAdd ${server}`);
+        server.on('serverDelete', (server, changes) => {
+          this.emit('serverDelete', server, changes);
+        });
+        server.on('playerAdd', (server, player, changes) => {
+          this.emit('playerAdd', server, player, changes);
+        });
+        server.on('playerUpdate', (server, player, changes) => {
+          this.emit('playerUpdate', server, player, changes);
+        });
+        server.on('playerDelete', (server, player, changes) => {
+          this.emit('playerDelete', server, player, changes);
         });
       });
     }

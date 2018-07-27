@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 import {createUuid} from '../lib/uuid.mjs';
-import {udpRequest, resolveDnsMultiple} from '../lib/udputils.mjs';
+import {udpRequest} from '../lib/udputils.mjs';
 import {WswPlayer} from './wswplayer.mjs';
 
 const servers = new Set();
@@ -76,7 +76,10 @@ export class WswServer extends EventEmitter{
       if (isNew) {
         this.emit('serverAdd', this, info);
       } else {
-        this.emit('serverUpdate', this, this.getInfoChanges(info));
+        const changes = this.getInfoChanges(info)
+        if (changes) {
+          this.emit('serverUpdate', this, changes);
+        }
       }
       this.info = info;
 
@@ -165,14 +168,18 @@ export class WswServer extends EventEmitter{
     }
   
     getInfoChanges(info) {
-      const changes = {
-        id: this.id,
-      };
+      const changes = {};
+      let hasChanges = false;
       Object.entries(info).forEach( ([key, value]) => {
         if (this.info.hasOwnProperty(key) && this.info[key] != info[key]) {
           changes[key] = value;
+          hasChanges = true;
         }
       });
+      if (!hasChanges) {
+        return false;
+      }
+      changes.id = this.id;
       return changes;
     }
 
