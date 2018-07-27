@@ -2,11 +2,12 @@ import React from 'react';
 import { flatConnect } from '../store';
 import { Button, Link } from '../components';
 
+import DownloadPage from '../pages/DownloadPage.jsx';
 import IndexPage from '../pages/IndexPage.jsx';
 import KitchenSink from '../pages/KitchenSink.jsx';
-import DownloadPage from '../pages/DownloadPage.jsx';
-import ServersPage from '../pages/ServersPage.jsx';
+import LoginPage from '../pages/LoginPage.jsx';
 import NotFoundPage from '../pages/NotFoundPage.jsx';
+import ServersPage from '../pages/ServersPage.jsx';
 
 function getRoutedComponent(route, transitionError) {
   if (!route) {
@@ -27,6 +28,9 @@ function getRoutedComponent(route, transitionError) {
   }
   if (name === 'download') {
     return <DownloadPage />;
+  }
+  if (name === 'login') {
+    return <LoginPage />;
   }
   return <NotFoundPage />;
 }
@@ -71,6 +75,11 @@ export default flatConnect(
                   text="Servers" />
               </div>
               <div className="Navbar__items-right">
+                <div className="Navbar__item">
+                  <Button as={Link} underlined primary={routeName === 'login'}
+                    routeName="login"
+                    text="Login" />
+                </div>
                 <div className="Navbar__item">
                   <Button as={Link} slanted secondary
                     routeName="download"

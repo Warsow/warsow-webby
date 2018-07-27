@@ -7,10 +7,9 @@ export default function Button(props) {
     as, icon, slanted, underlined, fluid, fitted, primary, secondary, bright, color,
     text, smallText, content, children,
     // Passthrough
-    onClick,
     ...rest
   } = props;
-  const ElementType = as;
+  const ElementType = props.as || (props.href && 'a') || 'button';
   const className = classes('Button', props.className, [
     slanted && 'Button--slanted',
     underlined && 'Button--underlined',
@@ -22,7 +21,7 @@ export default function Button(props) {
     color && 'Button--color-' + color,
   ]);
   return (
-    <ElementType {...rest} {...{className, onClick}}>
+    <ElementType {...rest} className={className}>
       {icon && (
         <i className={'Button__icon icon ' + icon} />
       )}
@@ -38,6 +37,5 @@ export default function Button(props) {
 }
 
 Button.defaultProps = {
-  as: 'div',
   role: 'button',
 };

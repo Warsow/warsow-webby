@@ -22,6 +22,11 @@ export const ROUTES = [
     name: 'download',
     path: '/download',
   },
+  {
+    title: 'Log In',
+    name: 'login',
+    path: '/login',
+  },
 ];
 
 const ROUTER_OPTIONS = {

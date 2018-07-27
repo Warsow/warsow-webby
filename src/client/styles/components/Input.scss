@@ -1,0 +1,58 @@
+.Input {
+  position: relative;
+  display: inline-flex;
+}
+
+.Input__label {
+  position: absolute;
+  top: 0.25em;
+  left: 0;
+  right: 0;
+  font-size: 0.8em;
+  line-height: 1.1em;
+  color: white-alpha(0.6);
+}
+
+.Input__element {
+  position: relative;
+  margin: 0;
+  margin-top: 1em;
+  margin-bottom: 0.2em;
+  max-width: 100%;
+  flex: 1 0 auto;
+  outline: none;
+  // -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+
+  font-size: inherit;
+  line-height: 1.5em;
+  font-family: 'Fira Sans Condensed', sans-serif;
+  padding: 0;
+  padding-bottom: 1.75px;
+
+  background-color: transparent;
+  color: #fff;
+
+  border: 0;
+  border-bottom: 3px solid white-alpha(0.2);
+  transition: border-bottom-color 100ms;
+
+  &::placeholder {
+    color: white-alpha(0.3);
+  }
+
+  &:hover {
+    border-bottom-color: white-alpha(0.4);
+  }
+
+  &:focus {
+    border-bottom-color: white-alpha(0.8);
+  }
+}
+
+.Input--fluid {
+  display: block;
+
+  .Input__element {
+    width: 100%;
+  }
+}

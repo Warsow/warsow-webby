@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
-import { Button } from '../components';
-// import ServerList from './components/ServerList.jsx';
+import { Button, Input } from '../components';
 
 const COLOR_NAMES = [
   'red', 'orange', 'yellow', 'olive',
@@ -80,6 +79,18 @@ export default function KitchenSink(props) {
             color={color} />
         )}
       </div>
+
+      <h2>Inputs</h2>
+      <div>
+        <Button text="Underlined button" underlined />
+        <Input label="Label" placeholder="Placeholder" />
+        <Button text="Submit" />
+      </div>
+      <div>
+        <Input label="Label" placeholder="Normal input" />
+        <Input label="Label" placeholder="Fluid input" fluid />
+      </div>
+
     </div>
   );
 }

@@ -5,50 +5,19 @@
 @import './typography.scss';
 @import './atomic.scss';
 
-body {
-  min-width: $page-width-min;
-  overflow-x: hidden;
-}
-
 // Components
 @import './components/Button.scss';
 @import './components/Greeting.scss';
 @import './components/Grid.scss';
+@import './components/Input.scss';
 @import './components/Layout.scss';
 @import './components/Motto.scss';
 @import './components/Navbar.scss';
 @import './components/ServerCard.scss';
 @import './components/Spacing.scss';
-// @import './components/divider.scss';
-// @import './components/icon.scss';
 
 // Misc
-// .container {
-//   max-width: 1200px;
-//   margin-left: auto;
-//   margin-right: auto;
-//   padding: 0 2rem;
-
-//   @media screen and (max-width: 460px) {
-//     padding: 0 1rem;
-//   }
-// }
-
-// .container-text {
-//   max-width: 750px;
-// }
-
-// .download {
-//   max-width: 435px;
-//   margin-left: auto;
-//   margin-right: auto;
-//   padding: 0 2rem;
-// }
-
-// .content {
-//   margin-top: 6em;
-// }
-
-// .mdi {
-//   min-width: 1em;
-// }
+body {
+  min-width: $page-width-min;
+  overflow-x: hidden;
+}

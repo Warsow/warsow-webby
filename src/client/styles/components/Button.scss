@@ -1,6 +1,15 @@
 .Button {
   position: relative;
   display: inline-block;
+
+  // Reset
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+  font-size: inherit;
+  font-family: inherit;
+
+  // Styling
   padding: 0.25em 1em;
   line-height: 1.5em;
   transition: background-color 100ms;
@@ -16,9 +25,14 @@
   margin-left: 0.3em;
 
   // Color mixin
-  @mixin apply-color($color-bg, $color-fg: #fff) {
+  @mixin apply-color($color-bg) {
     background: $color-bg;
-    color: $color-fg;
+    @if luminance($color-bg) >= 0.5 {
+      color: #000;
+    }
+    @else {
+      color: #fff;
+    }
     &:hover {
       background: lighten($color-bg, 10%);
     }
@@ -42,11 +56,11 @@
     @each $x in $color-map {
       &.Button--color-#{nth($x, 1)} {
         $color-bg: darken(nth($x, 2), 0.2);
-        @include apply-color($color-bg, #fff);
+        @include apply-color($color-bg);
 
         &.Button--bright {
           $color-bg: darken(nth($x, 2), 0);
-          @include apply-color($color-bg, #fff);
+          @include apply-color($color-bg);
         }
       }
     }
@@ -78,8 +92,13 @@
   }
 
   // Color mixin
-  @mixin apply-color($color-bg, $color-fg: #fff) {
-    color: $color-fg;
+  @mixin apply-color($color-bg) {
+    @if luminance($color-bg) >= 0.5 {
+      color: #000;
+    }
+    @else {
+      color: #fff;
+    }
 
     &:before {
       background: $color-bg;
@@ -107,11 +126,11 @@
   @each $x in $color-map {
     &.Button--color-#{nth($x, 1)} {
       $color-bg: darken(nth($x, 2), 0.2);
-      @include apply-color($color-bg, #fff);
+      @include apply-color($color-bg);
 
       &.Button--bright {
         $color-bg: darken(nth($x, 2), 0);
-        @include apply-color($color-bg, #fff);
+        @include apply-color($color-bg);
       }
     }
   }
@@ -168,18 +187,24 @@
   @each $x in $color-map {
     &.Button--color-#{nth($x, 1)} {
       $color-bg: darken(nth($x, 2), 0);
-      @include apply-color($color-bg, #fff);
+      @include apply-color($color-bg);
 
       &.Button--bright {
-        $color-bg: lighten(nth($x, 2), 0.5);
-        @include apply-color($color-bg, #fff);
+        $color-bg: lighten(nth($x, 2), 0.4);
+        @include apply-color($color-bg);
       }
     }
   }
 }
 
+
+//  Modifiers
+// --------------------------------------------------------
+
+
 .Button--fluid {
   display: block;
+  width: 100%;
 }
 
 .Button--fitted {
