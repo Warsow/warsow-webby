@@ -1,4 +1,5 @@
 import { createRenderer } from './renderer.mjs';
+import { acceptConnection, initializeLivesow } from '../livesow/livesow.mjs';
 
 const render = createRenderer();
 
@@ -20,7 +21,7 @@ export default function setupRoutes(router) {
 
   // Livesow websocket endpoint
   router.ws('/livesow', (ws, req) => {
-    // TODO: Hook into livesow connection handler, e.g. acceptConnection(ws)
+    acceptConnection(ws);
   });
 
   // Not found handler
