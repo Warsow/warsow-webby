@@ -15,12 +15,14 @@ export { routerActions } from './router.js';
 
 import { globalReducer } from './global.js';
 import { createRouterReducer } from './router.js';
+import { livesowReducer } from './livesow.js';
 
 // Export all reducers as one reducer
 export function createReducer() {
   return composeReducers([
     globalReducer,
     createRouterReducer(),
+    livesowReducer,
   ]);
 }
 

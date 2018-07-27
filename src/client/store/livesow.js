@@ -1,3 +1,4 @@
+import { fromJS } from 'immutable';
 import { EventEmitter } from '../utils.js';
 
 function getWsUrl(path) {
@@ -14,6 +15,16 @@ function livesowMiddleware(store) {
 
   // Dispatch livesow messages as redux actions
   client.onUpdate(msg => {
+    // Handle UPDATE as a stream of separate messages
+    if (msg.type === 'UPDATE') {
+      for (let msg of msg.payload) {
+        // Append livesow namespace
+        msg.type = `LIVESOW_${msg.type || msg.action}`;
+        // Dispatch action
+        store.dispatch(msg);
+      }
+      return;
+    }
     // Append livesow namespace
     msg.type = `LIVESOW_${msg.type}`;
     // Dispatch action
@@ -34,6 +45,36 @@ function livesowMiddleware(store) {
 
     next(action);
   };
+}
+
+export function livesowReducer(state, action) {
+  const { type, payload } = action;
+
+  if (type === 'LIVESOW_INIT') {
+    return state.set('livesow', fromJS(payload));
+  }
+
+  if (type === 'LIVESOW_SERVER_UPDATE') {
+    const server = payload;
+    const index = state
+      .getIn(['livesow', 'servers'])
+      .findIndex(x => x.id === server.id)
+    return state.updateIn(['livesow', 'servers'], servers => {
+      return servers.set(index, server);
+    });
+  }
+
+  if (type === 'LIVESOW_PLAYER_UPDATE') {
+    const player = payload;
+    const index = state
+      .getIn(['livesow', 'players'])
+      .findIndex(x => x.id === player.id)
+    return state.updateIn(['livesow', 'players'], players => {
+      return players.set(index, player);
+    });
+  }
+
+  return state;
 }
 
 export class LivesowClient {
