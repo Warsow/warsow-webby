@@ -8,10 +8,20 @@ import { createLogger } from './logger.mjs';
 
 // Get environment variables
 const env = getBoolArgument('--dev', 'local') || getEnv('NODE_ENV') || 'production';
-const port = getEnv('PORT') || (env === 'local' ? 3000 : 'server.socket');
+const port = getEnv('PORT') || (env === 'local' ? 3000 : 'storage/server.socket');
 
 const logger = createLogger('main');
 const routeLogger = createLogger('request');
+
+// Create storage dir
+try {
+  fs.mkdirSync('storage');
+}
+catch (err) {
+  if (err.code !== 'EEXIST') {
+    throw err;
+  }
+}
 
 async function setupServer() {
   // Create Express app

@@ -5,7 +5,7 @@
 
 .Input__label {
   position: absolute;
-  top: 0.25em;
+  top: 0;
   left: 0;
   right: 0;
   font-size: 0.8em;
@@ -13,11 +13,19 @@
   color: white-alpha(0.6);
 }
 
+@keyframes Input__element-autofill {
+  to {
+    background: rgba(250, 255, 189, 0.1);
+    color: rgb(250, 255, 189);
+    border-bottom-color: rgba(250, 255, 189, 0.8);
+  }
+}
+
 .Input__element {
   position: relative;
   margin: 0;
-  margin-top: 1em;
-  margin-bottom: 0.2em;
+  margin-top: 0.8em;
+  margin-bottom: 0.5em;
   max-width: 100%;
   flex: 1 0 auto;
   outline: none;
@@ -46,6 +54,11 @@
 
   &:focus {
     border-bottom-color: white-alpha(0.8);
+  }
+
+  &:-webkit-autofill {
+    animation-name: Input__element-autofill;
+    animation-fill-mode: both;
   }
 }
 

@@ -29,8 +29,13 @@ task_dev() {
 }
 
 task_clean() {
-  rm -rf node_modules public/bundles
-  rm -f yarn-error.log server.socket npm-debug.log package-lock.json
+  rm -rf public/bundles
+  rm -f yarn-error.log npm-debug.log package-lock.json
+}
+
+task_distclean() {
+  task_clean
+  rm -rf node_modules storage
 }
 
 
@@ -45,6 +50,8 @@ case ${1} in
     task_dev ;;
   '--clean')
     task_clean ;;
+  '--distclean')
+    task_distclean ;;
   *)
     task_default ;;
 esac

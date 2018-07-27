@@ -1,5 +1,6 @@
 import { acceptConnection, initializeLivesow } from '../livesow/livesow.mjs';
 import { createLogger } from './logger.mjs';
+import './store.mjs';
 
 const PUBLIC_DIR = process.cwd() + '/public';
 

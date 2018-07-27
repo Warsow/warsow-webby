@@ -3,7 +3,6 @@ import browserPlugin from 'router5/plugins/browser';
 
 export const ROUTES = [
   {
-    title: 'Home',
     name: 'index',
     path: '/',
   },
@@ -76,7 +75,12 @@ function routerMiddleware(store) {
       const routeName = payload.route.name;
       const routeDef = ROUTES.find(routeDef => routeDef.name === routeName);
       if (routeDef) {
-        window.document.title = `Warsow - ${routeDef.title}`;
+        if (routeDef.title) {
+          window.document.title = `${routeDef.title} - Warsow`;
+        }
+        else {
+          window.document.title = 'Warsow';
+        }
       }
     }
 
