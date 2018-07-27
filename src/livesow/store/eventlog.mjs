@@ -10,16 +10,16 @@ export class Action {
     if (this.payload.id == olderAction.payload.id) {
       // delete has priority
       if (this.action.includes('DELETE')) {
-        return olderAction; // this = newerAction
+        return this; // this = newerAction
       } else {
         // merge payload
         return new Action(
-          this.action,
+          olderAction.action,
           Object.assign(olderAction.payload, this.payload)
         );
       }
     }
-    return this;
+    return false;
   }
 
   static add(action, payload) {
@@ -40,18 +40,24 @@ export class Action {
       let isNew = true;
       newLog = newLog.map( (newerAction) => {
         let mergedAction = newerAction.merge(olderAction);
-        if (mergedAction !== newerAction) {
+        if (!mergedAction) {
+          return newerAction;
+        } else {
           isNew = false;
         }
         return mergedAction;
       });
 
       if (isNew) {
-        newLog.push(olderAction);
+        newLog.unshift(olderAction);
       }
     }
 
     return [newLog, actionLog[actionLog.length - 1]];
+  }
+
+  static getLastAction() {
+    return actionLog[actionLog.length - 1];
   }
 
   static purgeActionLog(index) {

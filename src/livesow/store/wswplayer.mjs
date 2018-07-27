@@ -93,6 +93,15 @@ export class WswPlayer {
     static getAllActive() {
       return [...players].filter( (player) => {
         return true;
+      }).map( (player) => {
+        return {
+          id: player.id,
+          server: player.server.id,
+          name: player.name,
+          score: player.score,
+          team: player.team,
+          ping: player.ping,
+        };
       });
     }
   }

@@ -141,6 +141,7 @@ export function initializeLivesow() {
       if (!client.initialized) {
         client.initialized = true;
         client.sendMessage('INIT', initMessage);
+        client.lastAction = Action.getLastAction();
       } else {
         client.sendMessage('UPDATE', getNewStuff(client));
       }
