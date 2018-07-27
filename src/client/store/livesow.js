@@ -54,23 +54,65 @@ export function livesowReducer(state, action) {
     return state.set('livesow', fromJS(payload));
   }
 
-  if (type === 'LIVESOW_SERVER_UPDATE') {
-    const server = payload;
-    const index = state
-      .getIn(['livesow', 'servers'])
-      .findIndex(x => x.id === server.id)
+  //  Servers
+  // ------------------------------------------------------
+
+  if (type === 'LIVESOW_SERVER_ADD') {
     return state.updateIn(['livesow', 'servers'], servers => {
-      return servers.set(index, server);
+      return servers.push(fromJS(payload));
+    });
+  }
+
+  if (type === 'LIVESOW_SERVER_UPDATE') {
+    return state.updateIn(['livesow', 'servers'], servers => {
+      const index = servers.findIndex(x => x.get('id') === payload.id)
+      if (index === -1) {
+        console.log('livesow:reducer', 'did not find server object', action);
+        return state;
+      }
+      return servers.set(index, servers.get(index).merge(payload));
+    });
+  }
+
+  if (type === 'LIVESOW_SERVER_DELETE') {
+    return state.updateIn(['livesow', 'servers'], servers => {
+      const index = servers.findIndex(x => x.get('id') === payload.id);
+      if (index === -1) {
+        console.log('livesow:reducer', 'did not find server object', action);
+        return servers;
+      }
+      return servers.delete(index);
+    });
+  }
+
+  //  Players
+  // ------------------------------------------------------
+
+  if (type === 'LIVESOW_PLAYER_ADD') {
+    return state.updateIn(['livesow', 'players'], players => {
+      return players.push(fromJS(payload));
     });
   }
 
   if (type === 'LIVESOW_PLAYER_UPDATE') {
-    const player = payload;
-    const index = state
-      .getIn(['livesow', 'players'])
-      .findIndex(x => x.id === player.id)
     return state.updateIn(['livesow', 'players'], players => {
-      return players.set(index, player);
+      const index = players.findIndex(x => x.get('id') === payload.id)
+      if (index === -1) {
+        console.log('livesow:reducer', 'did not find player object', action);
+        return state;
+      }
+      return players.set(index, players.get(index).merge(payload));
+    });
+  }
+
+  if (type === 'LIVESOW_PLAYER_DELETE') {
+    return state.updateIn(['livesow', 'players'], players => {
+      const index = players.findIndex(x => x.get('id') === payload.id);
+      if (index === -1) {
+        console.log('livesow:reducer', 'did not find player object', action);
+        return players;
+      }
+      return players.delete(index);
     });
   }
 
