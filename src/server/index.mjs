@@ -4,7 +4,7 @@ import Express from 'express';
 import setupExpressWs from 'express-ws';
 import { setupRoutes } from './routes.mjs';
 import { getEnv, getBoolArgument } from './argparse.mjs';
-import { createLogger } from './logger.mjs';
+import { createLogger } from '../common/logger.mjs';
 
 // Get environment variables
 const env = getBoolArgument('--dev', 'local') || getEnv('NODE_ENV') || 'production';

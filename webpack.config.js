@@ -19,7 +19,7 @@ const config = {
     filename: '[name].bundle.js',
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.mjs', '.js', '.jsx'],
     alias: {
       // Trick Semantic UI into picking up our provided theme
       '../../theme.config$': path.join(__dirname, 'src/client/styles/semantic/theme.config'),
@@ -28,7 +28,7 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.m?jsx?$/,
         exclude: /node_modules/,
         use: [
           {

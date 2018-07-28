@@ -1,9 +1,9 @@
 import EventEmitter from 'events';
-import {udpRequest, resolveDnsMultiple} from '../lib/udputils.mjs';
+import { udpRequest, resolveDnsMultiple } from '../lib/udputils.mjs';
 
-import {WswServer} from './wswserver.mjs';
+import { WswServer } from './wswserver.mjs';
 
-import { createLogger } from '../../server/logger.mjs';
+import { createLogger } from '../../common/logger.mjs';
 const logger = createLogger('WswMaster');
 
 const IGNORE_UDP6 = true;
@@ -52,7 +52,7 @@ export class WswMaster extends EventEmitter {
       this.sendRequests();
     });
   }
-  
+
   sendRequests() {
     this.masterServers.forEach( (server) => {
       if (IGNORE_UDP6 && server.family == 'udp6') {
@@ -82,11 +82,11 @@ export class WswMaster extends EventEmitter {
     let index = RESPONSE_HEADER[server.family].length;
     while (index < msg.length) {
       const typeToken = msg.toString('ascii', index++, index);
-      
+
       if ( msg.toString('ascii', index, index + 3) == "EOT" ) {
         break;
       }
-      
+
       let ip = '';
       let family;
       if (typeToken === TYPE_TOKEN['udp4']) {
@@ -110,7 +110,7 @@ export class WswMaster extends EventEmitter {
       index += 2;
 
       this.emit('foundServer', {ip: ip, port: port});
-      
+
       WswServer.getOrCreate(family, ip, port, (server) => {
         server.on('serverAdd', (server, changes) => {
           this.emit('serverAdd', server, changes);

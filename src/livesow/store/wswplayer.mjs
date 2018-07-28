@@ -1,5 +1,5 @@
-import {createUuid} from '../lib/uuid.mjs';
-import { createLogger } from '../../server/logger.mjs';
+import { createUuid } from '../../common/uuid.mjs';
+import { createLogger } from '../../common/logger.mjs';
 const logger = createLogger('WswPlayer');
 
 const players = new Set();
@@ -13,11 +13,11 @@ export class WswPlayer {
       this.team = team;
       this.ping = ping;
     }
-  
+
     toString() {
       return `[${this.name}: ${this.score} ${this.team} ${this.ping}]`;
     }
-  
+
     static getOrCreateOrUpdate(server, name, score, team, ping, onCreated, onUpdate) {
       let player = WswPlayer.getByServerName(server, name);
       if (!player) {
@@ -56,10 +56,10 @@ export class WswPlayer {
           onUpdate(player, changes);
         }
       }
-      
+
       return player;
     }
-  
+
     static delete(player) {
       players.delete(player);
     }

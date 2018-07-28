@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
-import {createUuid} from '../lib/uuid.mjs';
-import {udpRequest} from '../lib/udputils.mjs';
-import {WswPlayer} from './wswplayer.mjs';
+import { createUuid } from '../../common/uuid.mjs';
+import { udpRequest } from '../lib/udputils.mjs';
+import { WswPlayer } from './wswplayer.mjs';
 
 const servers = new Set();
 const changes = new Set();
@@ -155,7 +155,7 @@ export class WswServer extends EventEmitter{
       } else {
         info.race = ~~(info.g_race_gametype == 1);
       }
-      
+
       if (info.hasOwnProperty('g_match_score') && info.g_match_score) {
         const tempScore = info.g_match_score.match(MATCH_SCORE_REGEX);
         info.team_alpha_name =  tempScore[1];
@@ -166,7 +166,7 @@ export class WswServer extends EventEmitter{
 
       return info;
     }
-  
+
     getInfoChanges(info) {
       const changes = {};
       let hasChanges = false;
@@ -201,7 +201,7 @@ export class WswServer extends EventEmitter{
     static create(family, ip, port) {
       let server = new WswServer(family, ip, port);
     }
-  
+
     static getOrCreate(family, ip, port, onCreated) {
       let server = WswServer.getByIp(family, ip, port);
       if (!server) {
@@ -212,17 +212,17 @@ export class WswServer extends EventEmitter{
 
       return server;
     }
-  
+
     static delete(server) {
       servers.delete(server);
     }
-  
+
     static getById(id) {
       return [...servers].forEach( (server) => {
         return server.id == id;
       });
     }
-  
+
     static getByIp(family, ip, port) {
       return [...servers].find( (server) => {
         return server.family == family &&

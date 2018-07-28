@@ -1,11 +1,11 @@
 import LZString from 'lz-string';
-import {createUuid} from './lib/uuid.mjs';
-import {WswMaster} from './store/wswmaster.mjs';
-import {WswServer} from './store/wswserver.mjs';
-import {WswPlayer} from './store/wswplayer.mjs';
-import {Action} from './store/eventlog.mjs';
+import { createUuid } from '../common/uuid.mjs';
+import { createLogger } from '../common/logger.mjs';
+import { WswMaster } from './store/wswmaster.mjs';
+import { WswServer } from './store/wswserver.mjs';
+import { WswPlayer } from './store/wswplayer.mjs';
+import { Action } from './store/eventlog.mjs';
 
-import { createLogger } from '../server/logger.mjs';
 const logger = createLogger('Livesow');
 
 const APP_WS_PORT = process.env.APP_WS_PORT || 88;

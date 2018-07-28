@@ -3,21 +3,8 @@ export function createLogger(ns) {
 }
 
 const inception = Date.now();
-const env = process.env.NODE_ENV;
-
-const MONTHS = [
-  'Jan', 'Feb', 'Mar',
-  'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep',
-  'Oct', 'Nov', 'Dec',
-];
 
 function getTimestamp() {
-  if (env === 'production') {
-    const date = new Date();
-    return  MONTHS[date.getUTCMonth()] + ' '
-      + date.toISOString().substring(8, 19).replace('T', ', ');
-  }
   const timestamp = String(Date.now() - inception)
     .padStart(4, '0')
     .padStart(7, ' ');
@@ -48,6 +35,10 @@ class Logger {
 
   error(...args) {
     console.error(getPrefix(this.ns), ...args);
+  }
+
+  debug(...args) {
+    console.debug(getPrefix(this.ns), ...args);
   }
 
 }

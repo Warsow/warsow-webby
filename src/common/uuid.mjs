@@ -1,6 +1,5 @@
 /**
  * UUID v4 string generator
- * (c) stylemistake
  *
  * @return {string}
  */
