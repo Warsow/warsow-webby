@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "name": "warsow-web-client",
+  "version": "0.1.0",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "immutable": "^3.8.2",
+    "lodash": "^4.17.10",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-router5": "^6.0.2",
+    "redux-thunk": "^2.3.0",
+    "router5": "^6.3.0",
+    "semantic-ui-css": "^2.3.3",
+    "warsow-common": "^0.1.0"
+  }
+}

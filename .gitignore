@@ -7,11 +7,11 @@
 /vendor
 /storage
 /public/bundles
-/node_modules
-/npm-debug.log
-/package-lock.json
-/yarn-error.log
-/.esm-cache
+/config/override.*
+npm-debug.log
+package-lock.json
+yarn-error.log
+node_modules
 *.socket
 
 

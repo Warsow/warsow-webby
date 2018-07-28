@@ -1,17 +1,12 @@
 {
   "private": true,
   "scripts": {
-    "start": "node --experimental-modules src/server/index.mjs --dev",
-    "build": "webpack --progress"
+    "start": "cross-env NODE_ENV=local node --experimental-modules packages/warsow-web-server",
+    "build": "cross-env NODE_ENV=production webpack --progress"
   },
-  "dependencies": {
-    "express": "^4.16.2",
-    "express-ws": "^4.0.0",
-    "lodash": "^4.17.10",
-    "lokijs": "^1.5.5",
-    "lz-string": "1.4.4",
-    "ws": "^6.0.0"
-  },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.54",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.54",
@@ -19,25 +14,14 @@
     "@babel/polyfill": "^7.0.0-beta.54",
     "@babel/preset-env": "^7.0.0-beta.54",
     "@babel/preset-react": "^7.0.0-beta.54",
-    "@mdi/font": "^2.5.94",
     "babel-loader": "^8.0.0-beta",
+    "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.5",
-    "immutable": "^3.8.2",
-    "less": "^2.7.2",
-    "less-loader": "^4.1.0",
     "node-sass": "^4.9.2",
     "nodemon": "^1.18.3",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-    "redux-router5": "^6.0.2",
-    "redux-thunk": "^2.3.0",
-    "router5": "^6.3.0",
     "sass-loader": "^7.0.3",
-    "semantic-ui-less": "^2.3.3",
-    "style-loader": "^0.21.0",
+    "style-loader": "^0.22.1",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.16.1",
     "webpack-build-notifier": "^0.1.28",

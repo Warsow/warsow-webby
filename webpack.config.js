@@ -3,14 +3,13 @@
 const webpack = require('webpack');
 const path = require('path');
 const BuildNotifierPlugin = require('webpack-build-notifier');
-
-const NODE_ENV = process.env.NODE_ENV || 'local';
+const { NODE_ENV, RECAPTCHA_SITE_KEY } = require('warsow-common/config');
 
 const config = {
   mode: 'none',
   entry: {
     client: [
-      './src/client/index.jsx',
+      './packages/warsow-web-client',
     ],
   },
   output: {
@@ -20,10 +19,6 @@ const config = {
   },
   resolve: {
     extensions: ['.mjs', '.js', '.jsx'],
-    alias: {
-      // Trick Semantic UI into picking up our provided theme
-      '../../theme.config$': path.join(__dirname, 'src/client/styles/semantic/theme.config'),
-    },
   },
   module: {
     rules: [
@@ -38,15 +33,6 @@ const config = {
                 ['@babel/preset-env', {
                   modules: false,
                   useBuiltIns: 'usage',
-                  // targets: {
-                  //   browsers: [
-                  //     'Chrome >= 60',
-                  //     'Safari >= 10.1',
-                  //     'iOS >= 10.3',
-                  //     'Firefox >= 54',
-                  //     'Edge >= 15',
-                  //   ],
-                  // },
                 }],
                 '@babel/preset-react',
               ],
@@ -66,14 +52,6 @@ const config = {
           'style-loader',
           'css-loader',
           'sass-loader',
-        ],
-      },
-      {
-        test: /\.less$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'less-loader',
         ],
       },
       {
@@ -109,6 +87,12 @@ const config = {
   },
   plugins: [
     new BuildNotifierPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(NODE_ENV),
+        'RECAPTCHA_SITE_KEY': JSON.stringify(RECAPTCHA_SITE_KEY),
+      },
+    }),
   ],
   devtool: 'source-map',
   devServer: {
@@ -144,11 +128,6 @@ if (NODE_ENV === 'production') {
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
   config.devtool = false;
   config.plugins = config.plugins.concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production'),
-      },
-    }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new UglifyJsPlugin({
       parallel: false,

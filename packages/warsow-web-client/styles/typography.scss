@@ -1,0 +1,74 @@
+html, body {
+  font-family: 'Fira Sans Condensed', sans-serif;
+  font-size: 14pt;
+  line-height: 1.5em;
+  background: $color-bg;
+  color: $color-fg;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0.75em 0 0.5em;
+  line-height: 1.1em;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+h4, h5, h6 {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+small {
+  font-size: 0.75em;
+  line-height: 1.1em;
+}
+
+big {
+  font-size: 1.25em;
+  line-height: 1.1em;
+}
+
+i {
+  font-style: italic;
+}
+
+b, strong {
+  font-weight: 500;
+}
+
+p {
+  margin: 0 0 1em 0;
+}
+
+ul {
+  list-style: disc outside;
+  padding: 0.5em 0 0.5em 1em;
+}
+
+sup {
+  vertical-align: super;
+  font-size: 75%;
+}
+
+a {
+  text-decoration: none;
+  color: $color-warsow-orange;
+  transition: color 100ms;
+}
+
+a:hover {
+  color: lighten($color-warsow-orange, 0.4);
+}

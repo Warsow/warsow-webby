@@ -11,21 +11,25 @@ PATH="${PATH}:node_modules/.bin"
 ## --------------------------------------------------------
 
 task_default() {
-  yarn install >&2
+  task_install
   export NODE_ENV='production'
-  exec node --experimental-modules src/server/index.mjs "${@}"
+  exec node --experimental-modules packages/warsow-web-server "${@}"
+}
+
+task_install() {
+  yarn install --production=false >&2
 }
 
 task_build() {
-  yarn install >&2
+  task_install
   export NODE_ENV='production'
   webpack --progress "${@}"
 }
 
 task_dev() {
-  yarn install >&2
-  rm -rf public/bundles
-  exec node --experimental-modules src/server/index.mjs "${@}"
+  task_install
+  task_clean
+  exec node --experimental-modules packages/warsow-web-server "${@}"
 }
 
 task_clean() {
@@ -35,7 +39,7 @@ task_clean() {
 
 task_distclean() {
   task_clean
-  rm -rf node_modules storage
+  rm -rf node_modules packages/*/node_modules storage
 }
 
 

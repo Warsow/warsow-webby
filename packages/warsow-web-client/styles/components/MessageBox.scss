@@ -1,0 +1,35 @@
+.MessageBox {
+  background: scale-color($color-none, $lightness: -70%);
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+  border-bottom: 0.2em solid scale-color($color-none, $lightness: -20%);
+}
+
+.MessageBox--info {
+  background-color: scale-color($color-blue, $lightness: -75%, $saturation: -40%);
+  border-bottom-color: scale-color($color-blue, $lightness: -20%, $saturation: -40%);
+}
+
+.MessageBox--warning {
+  background-color: scale-color($color-yellow, $lightness: -75%, $saturation: -40%);
+  border-bottom-color: scale-color($color-yellow, $lightness: -20%, $saturation: -40%);
+}
+
+.MessageBox--success {
+  background-color: scale-color($color-green, $lightness: -75%, $saturation: -40%);
+  border-bottom-color: scale-color($color-green, $lightness: -20%, $saturation: -40%);
+}
+
+.MessageBox--error {
+  background-color: scale-color($color-red, $lightness: -75%, $saturation: -40%);
+  border-bottom-color: scale-color($color-red, $lightness: -20%, $saturation: -40%);
+}
+
+.MessageBox__title {
+  font-weight: 600;
+}
+
+.MessageBox__text {
+  font-size: 0.8em;
+  line-height: 1.5em;
+}
