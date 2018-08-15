@@ -5,7 +5,7 @@ import config from '../../webpack.config.js';
 
 export function setupWebpack(router) {
   // Add HMR connector to the client entry
-  config.entry.client.unshift('webpack-hot-middleware/client');
+  config.entry.client.unshift('webpack-hot-middleware/client?noInfo=true');
   // Add HMR webpack plugin
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
   // Instantiate the compiler

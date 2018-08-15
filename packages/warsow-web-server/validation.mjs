@@ -1,7 +1,7 @@
-import validator from 'validator';
+const REGEX_EMAIL = /^\S+@\S+$/i
 
 export function isEmail(str) {
-  return isString(str) && validator.isEmail(str);
+  return isString(str) && REGEX_EMAIL.test(str);
 }
 
 export function isEmpty(obj) {

@@ -7,9 +7,10 @@
     "bcrypt": "^3.0.0",
     "express": "^4.16.2",
     "express-ws": "^4.0.0",
+    "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",
     "lokijs": "^1.5.5",
-    "validator": "^10.5.0",
+    "mailgun-js": "^0.20.0",
     "warsow-common": "^0.1.0",
     "ws": "^6.0.0"
   }

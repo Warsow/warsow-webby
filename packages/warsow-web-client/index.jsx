@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import createStore from './createStore.js';
+import { createStore } from './store';
 
 import './styles/index.scss';
 
@@ -27,9 +27,22 @@ function renderLayout() {
 
 // Make Layout component hot reloadable
 if (module.hot) {
-  module.hot.accept(['./layout', './store'], renderLayout);
+  module.hot.accept(['./layout', './store'], () => {
+    console.debug('Replacing the layout component...');
+  });
 }
 
+// Make store hot reloadable
+if (module.hot) {
+  module.hot.accept('./store', () => {
+    console.debug('Replacing the store module...');
+    const { createReducer, createSaga } = require('./store');
+    store.replaceReducer(createReducer());
+    store.replaceSaga(createSaga());
+  });
+}
+
+// Initialize the page
 window.addEventListener('load', () => {
   renderLayout();
 });

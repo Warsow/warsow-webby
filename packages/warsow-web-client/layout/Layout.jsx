@@ -6,9 +6,11 @@ import DownloadPage from '../pages/DownloadPage.jsx';
 import IndexPage from '../pages/IndexPage.jsx';
 import KitchenSink from '../pages/KitchenSink.jsx';
 import LoginPage from '../pages/LoginPage.jsx';
-import RegisterPage from '../pages/RegisterPage.jsx';
 import NotFoundPage from '../pages/NotFoundPage.jsx';
+import RegistrationPage from '../pages/RegistrationPage.jsx';
+import RegistrationSuccessPage from '../pages/RegistrationSuccessPage.jsx';
 import ServersPage from '../pages/ServersPage.jsx';
+import UserProfilePage from '../pages/UserProfilePage.jsx';
 
 function getRoutedComponent(route, transitionError) {
   if (!route) {
@@ -31,10 +33,16 @@ function getRoutedComponent(route, transitionError) {
     return <DownloadPage />;
   }
   if (name === 'login') {
-    return <LoginPage />;
+    return <LoginPage {...params} />;
   }
-  if (name === 'register') {
-    return <RegisterPage />;
+  if (name === 'registration') {
+    return <RegistrationPage />;
+  }
+  if (name === 'registrationSuccess') {
+    return <RegistrationSuccessPage />;
+  }
+  if (name === 'user') {
+    return <UserProfilePage {...params} />;
   }
   return <NotFoundPage />;
 }
@@ -82,7 +90,7 @@ export default flatConnect(
                 <div className="Navbar__item">
                   <Button as={Link} underlined primary={routeName === 'kitchenSink'}
                     routeName="kitchenSink"
-                    text="Kitchen Sink" />
+                    text="Sink" />
                 </div>
               )}
               <div className="Navbar__item">

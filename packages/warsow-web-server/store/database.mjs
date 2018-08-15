@@ -2,7 +2,7 @@ import Loki from 'lokijs';
 import LokiFsStructuredAdapter from 'lokijs/src/loki-fs-structured-adapter.js';
 import { createLogger } from 'warsow-common/logger';
 
-const logger = createLogger('store/db');
+const logger = createLogger('store/database');
 
 // Create a persistent database
 const adapter = new LokiFsStructuredAdapter();
@@ -26,7 +26,7 @@ function onDatabaseLoaded(db, resolve) {
 
   // Ensure the existence of action collection
   if (db.getCollection('action') === null) {
-    logger.log('Creating "action" collection');
+    logger.log(`Creating "action" collection`);
     db.addCollection('action');
   }
 

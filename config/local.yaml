@@ -1,8 +1,8 @@
 # NODE_ENV: local
 
 ## HTTP server settings
-PORT: storage/server.socket
-BASE_URL: https://warsow.net
+# PORT: 3000
+# BASE_URL: http://localhost:3000
 
 ## Recaptcha settings
 # RECAPTCHA_SITE_KEY: 6Lfd12YUAAAAADN6PHTl2lXzJWjP0clsIu2tYm8h
@@ -14,7 +14,7 @@ BASE_URL: https://warsow.net
 # MAIL_DEFAULT_SENDER: Warsow <no-reply@warsow.net>
 
 ## Mailgun settings
-MAILGUN_DOMAIN: mg.warsow.net
+# MAILGUN_DOMAIN: null
 # MAILGUN_API_KEY: null
 # MAILGUN_API_PUBLIC_KEY: null
 

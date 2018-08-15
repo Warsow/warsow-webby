@@ -24,17 +24,32 @@ export const ROUTES = [
   {
     title: 'Log In',
     name: 'login',
-    path: '/login',
+    path: '/login?verified',
   },
   {
     title: 'Register',
-    name: 'register',
+    name: 'registration',
     path: '/register',
+  },
+  {
+    title: 'Register',
+    name: 'registrationSuccess',
+    path: '/register/success',
+  },
+  {
+    title: 'User profile',
+    name: 'user',
+    path: '/user/:username',
   },
 ];
 
 const ROUTER_OPTIONS = {
   // defaultRoute: 'index',
+  queryParams: {
+    arrayFormat: 'brackets',
+    booleanFormat: 'string',
+    nullFormat: 'hidden',
+  },
 };
 
 export const router = createRouter(ROUTES, ROUTER_OPTIONS)
@@ -48,6 +63,7 @@ import { actions as routerActions } from 'redux-router5';
 import { actionTypes as routerActionTypes } from 'redux-router5';
 
 export { routerActions };
+export { routerActionTypes };
 
 const {
   TRANSITION_SUCCESS,
@@ -113,13 +129,14 @@ function routerMiddleware(store) {
 //  Reducer
 // --------------------------------------------------------
 
-import { compose } from 'warsow-common/functional';
+import { chain } from 'warsow-common/functional';
 import { combineReducers } from './utils.js';
 import _routerReducer from 'redux-router5/immutable/reducer';
 
-export const routerReducer = compose(
+export const routerReducer = chain(
   combineReducers({ router: _routerReducer }),
-  routerTransitionReducer);
+  routerTransitionReducer
+);
 
 // Manages various parts of state on router transitions
 function routerTransitionReducer(state, action) {

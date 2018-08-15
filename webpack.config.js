@@ -88,10 +88,10 @@ const config = {
   plugins: [
     new BuildNotifierPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(NODE_ENV),
-        'RECAPTCHA_SITE_KEY': JSON.stringify(RECAPTCHA_SITE_KEY),
-      },
+      'process.env': JSON.stringify({
+        NODE_ENV,
+        RECAPTCHA_SITE_KEY,
+      }),
     }),
   ],
   devtool: 'source-map',

@@ -30,4 +30,13 @@ Runs a full build of frontend components. Places results in `public/bundles`.
 
 ### `bin/webby --clean`
 
-Removes all build artifacts.
+Removes build artifacts.
+
+### `bin/webby --dbclean`
+
+Removes all persisted state (database, generated encryption keys).
+
+### `bin/webby --distclean`
+
+Removes everything that is not tracked by the version control system, leaving you with
+the clean source code.

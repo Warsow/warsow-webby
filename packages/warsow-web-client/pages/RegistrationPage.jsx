@@ -1,10 +1,19 @@
-import React, { Component, Fragment } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { Button, Link, Form, Input, Recaptcha, MessageBox } from '../components';
+import { connect, authActions } from '../store';
 
 const { RECAPTCHA_SITE_KEY } = process.env;
 
-export default class RegisterPage extends Component {
+@connect(
+  state => ({
+    error: state.getIn(['auth', 'error']),
+  }),
+  dispatch => ({
+    authActions: bindActionCreators(authActions, dispatch),
+  })
+)
+export default class RegistrationPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -14,51 +23,26 @@ export default class RegisterPage extends Component {
       passwordConfirm: '',
       captcha: null,
     };
-    // Event handpers
-    this.onSubmit = async e => {
-      const { state } = this;
-      e.preventDefault();
-      console.log('register:submit', state);
-      try {
-        const res = await axios({
-          method: 'post',
-          url: '/api/createUser',
-          data: state,
-        });
-        console.log('register:res', res);
-        this.setState({
-          messageBox: {
-            success: true,
-            title: 'Registration successful',
-          },
-        });
-      }
-      catch (err) {
-        const res = err.response;
-        if (res && res.data.error) {
-          this.setState({
-            messageBox: {
-              error: true,
-              title: res.data.message,
-              bulletPoints: res.data.extra,
-            },
-          });
-        }
-      }
+    // Event handlers
+    this.onSubmit = e => {
+      const { authActions } = this.props;
+      authActions.register(this.state);
     };
   }
 
   render() {
-    const { props, state } = this;
+    const { error } = this.props;
     return (
       <div className="Layout__container Layout__container--text Layout__padded">
         <h1>Register</h1>
         <Form onSubmit={this.onSubmit}>
-          {state.messageBox && (
-            <MessageBox {...state.messageBox} />
+          {error && (
+            <MessageBox error
+              title={error.get('message')}
+              bulletPoints={error.get('extra')} />
           )}
           <Input fluid
-            autoComplete="off"
+            autoComplete="email"
             name="email"
             label="Email"
             onChange={e => {
@@ -67,7 +51,7 @@ export default class RegisterPage extends Component {
               });
             }} />
           <Input fluid
-            autoComplete="off"
+            autoComplete="username"
             name="username"
             label="Username"
             onChange={e => {
@@ -76,7 +60,7 @@ export default class RegisterPage extends Component {
               });
             }} />
           <Input fluid type="password"
-            autoComplete="off"
+            autoComplete="new-password"
             name="password"
             label="Password"
             onChange={e => {
@@ -85,7 +69,7 @@ export default class RegisterPage extends Component {
               });
             }} />
           <Input fluid type="password"
-            autoComplete="off"
+            autoComplete="new-password"
             name="password-confirm"
             label="Repeat password"
             onChange={e => {

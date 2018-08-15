@@ -5,7 +5,8 @@ import bodyParser from 'body-parser';
 import setupExpressWs from 'express-ws';
 import config from 'warsow-common/config';
 import { createLogger } from 'warsow-common/logger';
-import { setupRoutes } from './routes.mjs';
+import { setupRoutes } from './routes';
+import { setupAuth } from './auth.mjs';
 
 const logger = createLogger('main');
 const routeLogger = createLogger('request');
@@ -30,12 +31,6 @@ async function setupServer() {
   // Setup websockets
   setupExpressWs(app, server, {});
 
-  // Setup route logger
-  app.use((req, res, next) => {
-    routeLogger.log(req.ip || '[no ip]', req.path);
-    next();
-  });
-
   // // Setup EJS templating engine
   // app.set('view engine', 'ejs');
   // app.set('views', path.join(__dirname, 'templates'));
@@ -52,6 +47,17 @@ async function setupServer() {
     const { setupWebpack } = await import('./webpack.mjs');
     setupWebpack(app);
   }
+
+  // Setup route logger
+  if (config.NODE_ENV === 'local') {
+    app.use((req, res, next) => {
+      routeLogger.log(req.ip, req.path);
+      next();
+    });
+  }
+
+  // Setup auth
+  await setupAuth();
 
   // Setup routes
   await setupRoutes(app);

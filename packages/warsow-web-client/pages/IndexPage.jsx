@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Button, Link } from '../components';
 import ScreenWidthCondition from '../components/ScreenWidthCondition';
 
