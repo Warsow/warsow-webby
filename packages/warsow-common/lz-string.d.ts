@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 export function compressToBase64(input: string): string;
 export function decompressFromBase64(input: string): string;
 

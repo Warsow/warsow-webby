@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 DenMSC
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import dgram from 'dgram';
 import dns from 'dns';
 
@@ -39,7 +44,7 @@ export async function udpRequest(type, host, port, message, ms = 1000) {
   return udpQueueAdd( () => {
     const socket = dgram.createSocket(type);
     let timeout;
-  
+
     const responsePromise = new Promise( resolve => {
       socket.send(message, 0, message.length, port, host);
       socket.on('message', (msg, rinfo) => {
@@ -48,7 +53,7 @@ export async function udpRequest(type, host, port, message, ms = 1000) {
         resolve(msg);
       });
     })
-  
+
     const timeoutPromise = new Promise( resolve => {
       timeout = setTimeout(() => {
         socket.close();
@@ -56,7 +61,7 @@ export async function udpRequest(type, host, port, message, ms = 1000) {
         resolve(false);
       }, ms);
     });
-  
+
     return Promise.race([
       responsePromise,
       timeoutPromise

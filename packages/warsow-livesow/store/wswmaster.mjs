@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 DenMSC
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import EventEmitter from 'events';
 import { createLogger } from 'warsow-common/logger';
 import { udpRequest, resolveDnsMultiple } from '../lib/udputils.mjs';

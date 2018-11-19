@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import lodash from 'lodash';
 import { sendUserEmailVerification } from '../mail';
 import { getUserById, findUsers, findOneUser } from '../store/userSelectors.mjs';

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import { createRouter } from 'router5';
 import browserPlugin from 'router5/plugins/browser';
 

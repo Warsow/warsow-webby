@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import config from 'warsow-common/config';
 import { createLogger } from 'warsow-common/logger';
 import Mailgun from 'mailgun-js';

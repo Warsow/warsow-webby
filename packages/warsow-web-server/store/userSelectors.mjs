@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import { getUserCollection, verifyUserPassword } from './userCommon.mjs';
 
 export function findUsers(state, query) {

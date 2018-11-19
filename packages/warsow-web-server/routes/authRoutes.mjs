@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import { isEmpty, isUsername } from '../validation.mjs';
 import { createToken, verifyToken } from '../auth.mjs';
 import { getUserByCredentials } from '../store/userSelectors.mjs';

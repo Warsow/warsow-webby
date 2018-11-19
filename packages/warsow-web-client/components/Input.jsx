@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import React, { Component } from 'react';
 import { createUuid } from 'warsow-common/uuid';
 import { classes } from '../utils.js';

@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
+/**
  * Chains multiple functions into a pipeline and returns a new function.
  *
  * First argument to the transform is the output of the previous transform.

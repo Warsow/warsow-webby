@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 DenMSC
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 const actionLog = new Array();
 
 export class Action {
@@ -33,7 +38,7 @@ export class Action {
       return action === currAction;
     });
     index++;
-    
+
     let newLog = new Array();
     for (let i = actionLog.length-1; i >= index; i--) {
       const olderAction = actionLog[i];

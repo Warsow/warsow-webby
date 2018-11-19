@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import React from 'react';
 import Button from './Button.jsx';
 import Input from './Input.jsx';

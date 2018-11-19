@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { Button, Link, Form, Input, MessageBox } from '../components';

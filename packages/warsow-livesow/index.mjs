@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 DenMSC
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import LZString from 'warsow-common/lz-string';
 import { createUuid } from 'warsow-common/uuid';
 import { createLogger } from 'warsow-common/logger';

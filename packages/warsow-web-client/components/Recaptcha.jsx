@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2015 Hugo Dozois
+ * SPDX-License-Identifier: MIT
+ */
+
 // Adapted from https://github.com/dozoisch/react-google-recaptcha
 
 import React from "react";

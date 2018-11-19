@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import { createStore as createReduxStore } from 'redux';
 import { applyMiddleware, compose } from 'redux';
 import { pipeline } from 'warsow-common/functional';

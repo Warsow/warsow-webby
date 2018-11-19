@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 DenMSC
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import EventEmitter from 'events';
 import { createUuid } from 'warsow-common/uuid';
 import { udpRequest } from '../lib/udputils.mjs';

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import axios from 'axios';
 import * as userActions from './userActions.js';

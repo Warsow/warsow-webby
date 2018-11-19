@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import webpack from 'webpack';
 import wdm from 'webpack-dev-middleware';
 import wdmHot from 'webpack-hot-middleware';

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 export { default as Button } from './Button.jsx';
 export { default as ColorTokens } from './ColorTokens.jsx';
 export { default as Form } from './Form.jsx';

@@ -40,3 +40,12 @@ Removes all persisted state (database, generated encryption keys).
 
 Removes everything that is not tracked by the version control system, leaving you with
 the clean source code.
+
+
+## License
+
+Source code is provided under GPL 2.0 or later license.
+
+> SPDX-License-Identifier: GPL-2.0-or-later
+
+In addition, other licenses may also apply.

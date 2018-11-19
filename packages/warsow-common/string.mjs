@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
+/**
  * Removes excessive whitespace and indentation from the string
  *
  * @param  {string} str

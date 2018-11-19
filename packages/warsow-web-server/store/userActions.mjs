@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import { createUuid } from 'warsow-common/uuid';
 import { randomString } from 'warsow-common/string';
 import { hashPassword } from './userCommon.mjs';

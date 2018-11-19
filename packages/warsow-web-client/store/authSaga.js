@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import { all, take, takeEvery, put, call, select } from 'redux-saga/effects';
 import axios from 'axios';
 import { routerActions } from './router.js';

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import axios from 'axios';
 import qs from 'querystring';
 import config from 'warsow-common/config';

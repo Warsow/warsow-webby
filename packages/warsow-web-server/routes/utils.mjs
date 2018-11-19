@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 export function sendApiError(res, status, message, payload = {}) {
   res.status(status).send({
     ...payload,

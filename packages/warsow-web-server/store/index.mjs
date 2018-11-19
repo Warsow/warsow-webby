@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2018 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 import Loki from 'lokijs';
 import { createLogger } from 'warsow-common/logger';
 import { chain } from 'warsow-common/functional';
