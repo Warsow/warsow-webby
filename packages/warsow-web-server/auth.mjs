@@ -25,7 +25,7 @@ export async function setupAuth() {
       // Generate a new key
       logger.log(`Generating a new ${config.AUTH_SECRET_SIZE} byte secret`);
       authSecretBuf = await randomBuffer(config.AUTH_SECRET_SIZE);
-      await promisify(writeFile)(secretPath, authSecretBuf);
+      await promisify(fs.writeFile)(secretPath, authSecretBuf);
       logger.log(`Saved secret to '${secretPath}'`);
     }
     else {
