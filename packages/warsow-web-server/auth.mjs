@@ -35,7 +35,6 @@ export async function setupAuth() {
 }
 
 async function randomBuffer(size) {
-  const buf = Buffer.alloc(size);
   return await promisify(crypto.randomFill)(Buffer.alloc(size));
 }
 

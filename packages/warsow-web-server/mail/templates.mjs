@@ -153,8 +153,7 @@ export function renderUserEmailVerification(user) {
       email address.
     `),
     html: baseEmail('Account verification', 'Welcome to Warsow!', html`
-      <p>Before you go out and join our humble community, please verify your
-        email address.</p>
+      <p>Before you join our humble community, please verify your email address.</p>
       <p>Verifying your email helps you secure your account. If you ever forget your
         password, you will now be able to reset it by email.</p>
       <table>
