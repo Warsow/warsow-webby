@@ -2,65 +2,130 @@
 set -e
 cd "$(dirname "${0}")/.."
 
-export NODE_ENV='local'
 PATH="${PATH}:node_modules/.bin"
 
 
-##  Tasks
+##  Common tasks
 ## --------------------------------------------------------
 
-task_default() {
-  task_install
-  export NODE_ENV='production'
-  exec node --experimental-modules --no-deprecation packages/warsow-web-server "${@}"
+task-clean() {
+  rm -rf public/bundles
+  rm -f yarn-error.log npm-debug.log package-lock.json
 }
 
-task_install() {
-  yarn install --production=false >&2
+task-dbclean() {
+  task-clean
+  rm -rf storage
 }
 
-task_build() {
-  task_install
-  export NODE_ENV='production'
-  webpack --progress "${@}"
+task-distclean() {
+  task-clean
+  rm -rf node_modules packages/*/node_modules storage
 }
 
-task_dev() {
-  task_install
-  task_clean
+
+##  Helper functions
+## --------------------------------------------------------
+
+has-any() {
+  for arg in "${@:2}"; do
+    if [[ ${1} == ${arg} ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+## Usage: needs-rebuild <target> <source_dirs>
+needs-rebuild() {
+  if [[ ! -e ${1} ]]; then
+    return 0
+  fi
+  local files_newer="$(find "${@:2}" -type f -newer "${1}")"
+  if [[ -n ${files_newer} ]]; then
+    return 0
+  fi
+  return 1
+}
+
+
+##  Argument parsing
+## --------------------------------------------------------
+
+server_args=()
+server_dev=0
+client_needs_rebuild=0
+
+while [[ ${#} -gt 0 ]]; do
+  if has-any "${1}" --clean; then
+    task-clean
+    exit 0
+  fi
+  if has-any "${1}" --dbclean; then
+    task-dbclean
+    exit 0
+  fi
+  if has-any "${1}" --distclean; then
+    task-distclean
+    exit 0
+  fi
+  if has-any "${1}" --build --rebuild; then
+    client_needs_rebuild=1
+    shift 1
+    continue
+  fi
+  if has-any "${1}" --dev; then
+    server_dev=1
+    shift 1
+    continue
+  fi
+  if has-any "${1}" -p --port -s --socket; then
+    export PORT="${2}"
+    shift 2
+    continue
+  fi
+  ## Server argument
+  server_args+=("${1}")
+  shift 1
+done
+
+
+##  Actual magic
+## --------------------------------------------------------
+
+#@ Ensure we're running on latest dependencies
+yarn install --production=false >&2
+
+## Run a development server
+if [[ ${server_dev} == 1 ]]; then
+  export NODE_ENV="local"
+  task-clean
   exec nodemon --quiet \
     --watch config \
     --watch packages/warsow-common \
     --watch packages/warsow-livesow \
     --watch packages/warsow-web-server \
     --ext js,mjs,yaml \
-    --experimental-modules packages/warsow-web-server "${@}"
-}
+    --experimental-modules \
+    packages/warsow-web-server "${server_args[@]}"
+fi
 
-task_clean() {
-  rm -rf public/bundles
-  rm -f yarn-error.log npm-debug.log package-lock.json
-}
+## Code below is production only
+export NODE_ENV="production"
 
-task_dbclean() {
-  task_clean
-  rm -rf storage
-}
+## If we didn't specify the build flag, try to determine it by ourselves
+if [[ ${client_needs_rebuild} == 0 ]]; then
+  if needs-rebuild public/bundles/client.bundle.js \
+    packages/warsow-{common,web-client}; then
+    client_needs_rebuild=1
+  fi
+fi
 
-task_distclean() {
-  task_clean
-  rm -rf node_modules packages/*/node_modules storage
-}
+## Build the client bundle
+if [[ ${client_needs_rebuild} == 1 ]]; then
+  webpack --progress
+fi
 
-
-##  Option parsing
-## --------------------------------------------------------
-
-case ${1} in
-  '--build') task_build ;;
-  '--dev') task_dev ;;
-  '--clean') task_clean ;;
-  '--dbclean') task_dbclean ;;
-  '--distclean') task_distclean ;;
-  *) task_default ;;
-esac
+## Run a production server
+exec node --experimental-modules --no-deprecation \
+  packages/warsow-web-server "${server_args[@]}"
