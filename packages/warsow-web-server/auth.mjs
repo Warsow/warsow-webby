@@ -38,19 +38,25 @@ async function randomBuffer(size) {
   return await promisify(crypto.randomFill)(Buffer.alloc(size));
 }
 
-export async function createToken(payload) {
+export async function createToken(iss, aud, { longTerm = false } = {}) {
+  const payload = { iss, aud };
   const options = {
     algorithm: 'HS256',
-    expiresIn: '10 minutes',
+    expiresIn: longTerm
+      ? '1 year'
+      : '10 minutes',
   };
   return await promisify(jwt.sign)(payload, authSecretBuf, options);
 }
 
-export async function verifyToken(token) {
+export async function verifyToken(token, aud) {
   const options = {
     algorithms: ['HS256'],
   };
   const payload = await promisify(jwt.verify)(token, authSecretBuf, options);
   logger.log('decoded payload', payload);
+  if (payload.aud !== aud) {
+    logger.log(`invalid audience, expected '${aud}', got '${payload.aud}'`);
+  }
   return payload;
 }
