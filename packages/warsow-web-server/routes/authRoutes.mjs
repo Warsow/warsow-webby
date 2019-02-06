@@ -45,6 +45,18 @@ const loginRoute = store => async (req, res) => {
 };
 
 const loginStatsowRoute = store => async (req, res) => {
+  if (Array.isArray(req.body)) {
+    const results = [];
+    const fakeRes = {
+      status: () => fakeRes,
+      send: obj => results.push(obj),
+    };
+    for (let body of req.body) {
+      const fakeReq = { body };
+      await loginStatsowRoute(store)(fakeReq, fakeRes);
+    }
+    return res.send(results);
+  }
   const { login, password, handle } = req.body;
 
   const rejectStatsow = (res, login, handle) => {
