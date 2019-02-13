@@ -12,6 +12,7 @@ import { sendApiError } from './utils.mjs';
 export function setupAuthRoutes(router, store) {
   router.post('/api/auth/login', loginRoute(store));
   router.post('/api/auth/login-statsow', loginStatsowRoute(store));
+  router.post('/api/auth/statsow', loginStatsowRoute(store));
 }
 
 const loginRoute = store => async (req, res) => {
@@ -45,6 +46,7 @@ const loginRoute = store => async (req, res) => {
 };
 
 const loginStatsowRoute = store => async (req, res) => {
+  // Handle array (bulk mode)
   if (Array.isArray(req.body)) {
     const results = [];
     const fakeRes = {
@@ -57,6 +59,7 @@ const loginStatsowRoute = store => async (req, res) => {
     }
     return res.send(results);
   }
+
   const { login, password, handle } = req.body;
 
   const rejectStatsow = (res, login, handle) => {
@@ -96,7 +99,7 @@ const loginStatsowRoute = store => async (req, res) => {
   return res.send({
     handle: handle || null,
     login: login || null,
-    is_valid: false,
+    is_valid: true,
     player_id: user.id,
     profile_web_url: config.BASE_URL + '/user/' + user.username,
     profile_access_token: token,
